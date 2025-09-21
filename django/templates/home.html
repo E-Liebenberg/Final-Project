@@ -1,8 +1,55 @@
 {% extends "base.html" %}
+{% block title %}Welcome · Nurse Call System{% endblock %}
 
-{% block title %}Home - Hospital System{% endblock %}
+{% block extra_styles %}
+<style>
+  html, body { height: 100%; }
+  body { margin: 0; }
+  /* Full-page clouds behind everything */
+  #vanta-bg { position: fixed; inset: 0; z-index: -1; }
+  /* Centered welcome text */
+  .hero {
+    min-height: calc(100vh - 64px); /* leaves space for navbar */
+    display: grid; place-items: center; text-align: center; color: #111;
+  }
+  .hero h1 { font-weight: 700; font-size: clamp(2rem, 6vw, 3.5rem); margin-bottom: .5rem; }
+  .hero p  { font-size: clamp(1rem, 2.2vw, 1.25rem); opacity: .9; max-width: 800px; margin: 0 auto; }
+  /* (Optional) translucent navbar so clouds peek through */
+  .navbar.bg-light { background: rgba(255,255,255,.75) !important; backdrop-filter: blur(6px); }
+</style>
+{% endblock %}
 
 {% block content %}
-    <h2>Welcome to the Hospital Nurse Call System</h2>
-    <p>Use the navigation above to admit a patient or view the dashboard.</p>
+<div id="vanta-bg"></div>
+
+<section class="hero container">
+  <div>
+    <h1>Welcome to the Nurse Call System</h1>
+    <p>
+      A calm, cloud-backed home for real-time nurse call alerts, bedside sensors,
+      and theatre status. Use the navigation above to admit a patient or open a dashboard.
+    </p>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+  <!-- Three.js (required by Vanta) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
+  <!-- Vanta Clouds -->
+  <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.clouds.min.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      if (window._vanta) window._vanta.destroy();
+      window._vanta = VANTA.CLOUDS({
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00
+        // no colors set → default “clouds only” look
+      });
+    });
+  </script>
 {% endblock %}
