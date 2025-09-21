@@ -12,8 +12,9 @@
     min-height: calc(100vh - 64px); /* leaves space for navbar */
     display: grid; place-items: center; text-align: center; color: #111;
   }
-  .hero h1 { font-weight: 700; font-size: clamp(2rem, 6vw, 3.5rem); margin-bottom: .5rem; }
-  .hero p  { font-size: clamp(1rem, 2.2vw, 1.25rem); opacity: .9; max-width: 800px; margin: 0 auto; }
+  .hero h1 { font-weight: 700; font-size: clamp(2rem, 6vw, 3.5rem); margin-bottom: .75rem; }
+  .hero p  { font-size: clamp(1rem, 2.2vw, 1.25rem); opacity: .9; max-width: 850px; margin: 0 auto 0.75rem; }
+  .hero small { display: block; margin-top: 1rem; font-size: .9rem; opacity: .7; }
   /* (Optional) translucent navbar so clouds peek through */
   .navbar.bg-light { background: rgba(255,255,255,.75) !important; backdrop-filter: blur(6px); }
 </style>
@@ -26,9 +27,16 @@
   <div>
     <h1>Welcome to the Nurse Call System</h1>
     <p>
-      A calm, cloud-backed home for real-time nurse call alerts, bedside sensors,
-      and theatre status. Use the navigation above to admit a patient or open a dashboard.
+      This platform connects bedside units, patient remotes, and theatre modules into
+      a single real-time monitoring system. Nurses receive instant alerts for calls,
+      Code Blue emergencies, and sensor events (movement, sound, RFID, temperature, humidity).
     </p>
+    <p>
+      Use the navigation bar above to admit a patient, review pending admissions,
+      or open a live ward or theatre dashboard. Each action is logged for safety,
+      ensuring accountability in critical hospital environments.
+    </p>
+    <small>Fast · Reliable · Designed for patient safety</small>
   </div>
 </section>
 {% endblock %}
@@ -48,7 +56,7 @@
         gyroControls: false,
         minHeight: 200.00,
         minWidth: 200.00
-        // no colors set → default “clouds only” look
+        // default clouds look
       });
     });
   </script>

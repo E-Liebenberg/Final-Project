@@ -41,6 +41,13 @@
                 <li class="nav-item">
                     <a class="nav-link{% if request.resolver_match.url_name == 'alerts:dashboard' %} active{% endif %}" href="{% url 'alerts:dashboard' %}">Alerts</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link{% if request.resolver_match.namespace == 'patients' and request.resolver_match.url_name == 'admit_patient' %} active{% endif %}" 
+                    href="{% url 'patients:admit_patient' %}">
+                        Preadmission
+                    </a>
+                </li>
+
                 {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="nav-link{% if request.resolver_match.url_name == 'patients:dashboard' %} active{% endif %}" href="{% url 'patients:dashboard' %}">Patient Dashboard</a>

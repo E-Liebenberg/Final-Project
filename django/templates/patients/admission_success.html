@@ -10,6 +10,6 @@
 
     <p>Admission still needs to be confirmed by an admin clerk.</p>
 
-    <p><a href="{% url 'admit_patient' %}">Admit another patient</a></p>
+    <a href="{% url 'patients:admit_patient' %}">Admit another patient</a>
     <p><a href="{% url 'home' %}">Go to Home</a></p>
 {% endblock %}

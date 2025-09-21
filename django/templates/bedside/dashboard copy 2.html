@@ -1,0 +1,293 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+
+<style>
+  .dashboard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1rem}
+  .tile{padding:1rem;border-radius:10px;color:#fff;text-align:center;font-weight:bold;cursor:pointer;transition:transform .2s}
+  .tile:hover{transform:scale(1.02)}
+  .tile[data-state="ON"]{box-shadow:0 0 10px 3px rgba(255,255,255,.35)}
+  .tile-code-blue{background:#dc3545}
+  .tile-nurse{background:#0d6efd}
+  .tile-move{background:#ffc107;color:#212529}
+  .tile-light{background:#6c757d}
+  .tile-rfid{background:#198754}
+  .tile-env{background:#0dcaf0}
+
+  /* Visual alarm effects (no sound for nurse call) */
+  @keyframes pulse-red   {0%,100%{box-shadow:0 0 0 0 rgba(220,53,69,.9)}50%{box-shadow:0 0 30px 8px rgba(220,53,69,.9)}}
+  @keyframes pulse-amber {0%,100%{box-shadow:0 0 0 0 rgba(255,193,7,.9)} 50%{box-shadow:0 0 30px 8px rgba(255,193,7,.9)}}
+  .alarm-red   { animation:pulse-red 1s infinite }
+  .alarm-amber { animation:pulse-amber 1s infinite }
+
+  #alert-log { max-height: 250px; }
+</style>
+
+<div class="container mt-4">
+  <h3 class="mb-3">🛏️ Bedside <code>bedsidev3</code> Dashboard
+    <a href="{% url 'bedside:bedside_download_csv' %}" class="btn btn-sm btn-outline-primary ms-3">📥 Download CSV</a>
+  </h3>
+
+  <!-- Tiles -->
+  <div class="dashboard-grid mb-4">
+    <div id="tile-code-blue"  class="tile tile-code-blue" data-state="OFF">
+      <i class="bi bi-exclamation-octagon-fill fs-2 d-block mb-1"></i>Code Blue
+      <div class="small mt-1" id="code-blue-state">--</div>
+    </div>
+    <div id="tile-nurse-call" class="tile tile-nurse" data-state="OFF">
+      <i class="bi bi-bell-fill fs-2 d-block mb-1"></i>Nurse Call
+      <div class="small mt-1" id="nurse-call-state">--</div>
+    </div>
+    <div id="tile-no-move"    class="tile tile-move" data-state="OFF">
+      <i class="bi bi-person-x-fill fs-2 d-block mb-1"></i>No Movement
+      <div class="small mt-1" id="no-move-state">--</div>
+    </div>
+    <div id="tile-light"      class="tile tile-light" data-state="OFF">
+      <i class="bi bi-lightbulb-fill fs-2 d-block mb-1"></i>Room Light
+      <div class="small mt-1" id="room-light-state">--</div>
+    </div>
+    <div id="tile-env" class="tile tile-env">
+      <i class="bi bi-thermometer-half fs-2 d-block mb-1"></i>
+      <span id="temp-now">--</span> °C /
+      <span id="hum-now">--</span> %
+      <div class="small text-white-50">live</div>
+    </div>
+    <div id="tile-rfid" class="tile tile-rfid">
+      <i class="bi bi-person-badge-fill fs-2 d-block mb-1"></i>RFID Tag
+      <div id="rfid-val" class="fs-5 mt-1">--</div>
+    </div>
+  </div>
+
+  <!-- Charts + Recent Alerts -->
+  <div class="row g-3 align-items-stretch">
+    <div class="col-12 col-md-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">📈 Temperature &amp; Humidity (live)</h5>
+          <div style="height:240px"><canvas id="tempChart" class="w-100 h-100"></canvas></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-6">
+      <div class="card shadow-sm h-100">
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title">📜 Recent Alerts</h5>
+          <ul id="alert-log" class="list-group flex-grow-1 overflow-auto"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Audio for Code Blue (sound ON) -->
+<audio id="code-blue-audio" src="{% static 'alert.mp3' %}" preload="auto"></audio>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+/* WebSocket (port fix for dev split 8001→8000) */
+const protocol = location.protocol==="https:"?"wss":"ws";
+const wsPort   = location.port==="8001"?"8000":location.port;
+const wsHost   = location.hostname+(wsPort?":"+wsPort:"");
+const ws       = new WebSocket(`${protocol}://${wsHost}/ws/bedsidev3/dashboard/`);
+
+/* MQTT publish helper */
+function mqttPublish(topic,payload){
+  fetch("{% url 'mqtt_publish' %}",{
+    method:"POST",
+    headers:{"Content-Type":"application/json","X-CSRFToken":"{{ csrf_token }}"},
+    credentials:"same-origin",
+    body:JSON.stringify({topic,payload})
+  });
+}
+const mqttAck = t=>mqttPublish(t,"ack");
+
+/* Tile clicks (acknowledge/toggle) */
+document.getElementById("tile-code-blue" ).onclick=()=>mqttAck("bedsidev3/nursecall/code_blue/ack");
+document.getElementById("tile-nurse-call").onclick=()=>mqttAck("bedsidev3/nursecall/nurse_call/ack");
+document.getElementById("tile-no-move"   ).onclick=()=>mqttAck("bedsidev3/nursecall/no_movement/ack");
+document.getElementById("tile-light"     ).onclick=()=>{
+  const on=document.getElementById("tile-light").dataset.state!=="ON";
+  mqttPublish("bedsidev3/room/light/set",on?"on":"off");
+  setActive("tile-light",on); // optimistic UI
+  document.getElementById("room-light-state").innerText = on ? "ON" : "OFF";
+};
+
+/* Chart (live series) */
+const chart=new Chart(document.getElementById("tempChart"),{
+  type:"line",
+  data:{labels:[],datasets:[
+    {label:"Temp °C",    yAxisID:"y",  data:[], borderColor:"#0dcaf0", tension:.3},
+    {label:"Humidity %", yAxisID:"y1", data:[], borderColor:"#6610f2", tension:.3}
+  ]},
+  options:{
+    animation:false,
+    scales:{ y:{}, y1:{position:"right",grid:{drawOnChartArea:false}} },
+    plugins:{ legend:{display:true} }
+  }
+});
+function updateChart(i,v){
+  chart.data.labels.push(new Date().toLocaleTimeString());
+  chart.data.datasets[i].data.push(v);
+  if(chart.data.labels.length>60){
+    chart.data.labels.shift();
+    chart.data.datasets.forEach(d=>d.data.shift());
+  }
+  chart.update();
+}
+
+/* Helpers (same UX as theatre) */
+function setActive(id,on){
+  const el=document.getElementById(id);
+  el.dataset.state = on ? "ON" : "OFF";
+}
+function addAlertLog(message){
+  const log=document.getElementById("alert-log");
+  const time=new Date().toLocaleTimeString();
+  const li=document.createElement("li");
+  li.className="list-group-item";
+  li.textContent=`[${time}] ${message}`;
+  log.prepend(li);
+  if(log.children.length>15) log.removeChild(log.lastChild);
+}
+
+/* Visual alarms (no sound for nurse call) */
+function setCodeBlueAlarm(on){
+  const tile=document.getElementById("tile-code-blue");
+  tile.classList.toggle("alarm-red", on);
+  const audio=document.getElementById("code-blue-audio");
+  if(on){ audio?.play().catch(()=>{}); } else { if(audio){ audio.pause(); audio.currentTime=0; } }
+}
+function setNurseCallAlarm(on){
+  const tile=document.getElementById("tile-nurse-call");
+  tile.classList.toggle("alarm-amber", on); // NO sound, visual only
+}
+
+/* -------- Dual-mode WS handler: supports {event,data} OR {topic,value} -------- */
+
+ws.onmessage = (e)=>{
+  const msg = JSON.parse(e.data);
+  if ("topic" in msg && "value" in msg) {
+    handleTopicValue(msg.topic, msg.value);
+  } else if ("event" in msg && "data" in msg) {
+    handleEventData(msg.event, msg.data);
+  } else {
+    // console.log("Unknown WS payload", msg);
+  }
+};
+
+/* Theatre-like handler (topic/value) */
+function handleTopicValue(topic, value){
+  // Expect topics like: bedsidev3/temperature, bedsidev3/humidity,
+  // bedsidev3/rfid/tag, bedsidev3/nursecall/code_blue, bedsidev3/nursecall/nurse_call, etc.
+  if (topic.endsWith("/temperature")) {
+    const t=parseFloat(value); if(!isNaN(t)){
+      document.getElementById("temp-now").innerText=t.toFixed(1);
+      updateChart(0,t);
+    }
+    return;
+  }
+  if (topic.endsWith("/humidity")) {
+    const h=parseFloat(value); if(!isNaN(h)){
+      document.getElementById("hum-now").innerText=h.toFixed(1);
+      updateChart(1,h);
+    }
+    return;
+  }
+  if (topic.endsWith("/rfid/tag")) {
+    document.getElementById("rfid-val").innerText = value || "--";
+    addAlertLog(`🏷️ RFID tag detected: ${value||'unknown'}`);
+    return;
+  }
+  if (topic.includes("/nursecall/")) {
+    // Normalized values expected: "ON"/"OFF" or "active"/"inactive"
+    const on = (String(value).toUpperCase()==="ON" || String(value).toLowerCase()==="active" || value===true || value==="1");
+    if (topic.endsWith("/code_blue")) {
+      setActive("tile-code-blue", on);
+      document.getElementById("code-blue-state").innerText = on ? "ON" : "OFF";
+      setCodeBlueAlarm(on);
+      addAlertLog(on ? "🚨 Code Blue activated!" : "✅ Code Blue cleared");
+    } else if (topic.endsWith("/nurse_call")) {
+      setActive("tile-nurse-call", on);
+      document.getElementById("nurse-call-state").innerText = on ? "ON" : "OFF";
+      setNurseCallAlarm(on); // visual only
+      addAlertLog(on ? "🛎️ Nurse Call activated" : "✅ Nurse Call cleared");
+    } else if (topic.endsWith("/no_movement")) {
+      setActive("tile-no-move", on);
+      document.getElementById("no-move-state").innerText = on ? "ALARM" : "OK";
+      addAlertLog(on ? "🚧 No movement alarm" : "✅ No movement cleared");
+    }
+    return;
+  }
+  if (topic.endsWith("/room/light")) {
+    const on = (String(value).toLowerCase()==="on" || value===true || value==="1");
+    setActive("tile-light", on);
+    document.getElementById("room-light-state").innerText = on ? "ON" : "OFF";
+    return;
+  }
+}
+
+/* Bedside-style handler (event/data) */
+function handleEventData(event, data){
+  switch(event){
+    case "temperature": {
+      const t=parseFloat(data.value);
+      if(!isNaN(t)){
+        document.getElementById("temp-now").innerText=t.toFixed(1);
+        updateChart(0,t);
+      }
+      break;
+    }
+    case "humidity": {
+      const h=parseFloat(data.value);
+      if(!isNaN(h)){
+        document.getElementById("hum-now").innerText=h.toFixed(1);
+        updateChart(1,h);
+      }
+      break;
+    }
+    case "rfid":
+    case "rfid_tag":
+    case "rfid_tag_last":
+    case "last_rfid_tag": {
+      const tag = data?.uid || data?.value || data?.tag || "--";
+      document.getElementById("rfid-val").innerText = tag;
+      addAlertLog(`🏷️ RFID tag detected: ${tag}`);
+      break;
+    }
+    case "code_blue": {
+      const on = !!data.active;
+      setActive("tile-code-blue", on);
+      document.getElementById("code-blue-state").innerText = on ? "ON" : "OFF";
+      setCodeBlueAlarm(on);
+      addAlertLog(on ? "🚨 Code Blue activated!" : "✅ Code Blue cleared");
+      break;
+    }
+    case "nurse_call": {
+      const on = !!data.active;
+      setActive("tile-nurse-call", on);
+      document.getElementById("nurse-call-state").innerText = on ? "ON" : "OFF";
+      setNurseCallAlarm(on); // visual only, no sound
+      addAlertLog(on ? "🛎️ Nurse Call activated" : "✅ Nurse Call cleared");
+      break;
+    }
+    case "no_movement": {
+      const on = !!data.active;
+      setActive("tile-no-move", on);
+      document.getElementById("no-move-state").innerText = on ? "ALARM" : "OK";
+      addAlertLog(on ? "🚧 No movement alarm" : "✅ No movement cleared");
+      break;
+    }
+    case "room_light": {
+      const on = (data.state==="on");
+      setActive("tile-light", on);
+      document.getElementById("room-light-state").innerText = on ? "ON" : "OFF";
+      break;
+    }
+    default:
+      // console.log("WS event", event, data);
+      break;
+  }
+}
+</script>
+{% endblock %}
