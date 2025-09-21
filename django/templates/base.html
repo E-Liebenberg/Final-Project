@@ -45,6 +45,14 @@
                     <li class="nav-item">
                         <a class="nav-link{% if request.resolver_match.url_name == 'patients:dashboard' %} active{% endif %}" href="{% url 'patients:dashboard' %}">Patient Dashboard</a>
                     </li>
+                      <li class="nav-item">
+                        <a class="nav-link{% if request.resolver_match.namespace == 'bedside' and request.resolver_match.url_name == 'bedside_dashboard' %} active{% endif %}"
+                        href="{% url 'bedside:bedside_dashboard' %}">Bedside Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link{% if request.resolver_match.namespace == 'theatre' and request.resolver_match.url_name == 'theatre_dashboard' %} active{% endif %}"
+                        href="{% url 'theatre:theatre_dashboard' %}">Theatre Dashboard</a>
+                    </li>
                 {% endif %}
             </ul>
 
