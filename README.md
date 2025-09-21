@@ -96,18 +96,16 @@ git clone https://github.com/ELUOL/Submission-Repo.git
 cd Submission-Repo
 
 # Create & activate a virtual environment
-python -m venv .venv
-# macOS/Linux:
-source .venv/bin/activate
-# Windows (Powershell):
-.venv\Scripts\Activate.ps1
+python -m venv venv
+venv\Scripts\activate
 ```
 
 ## Install Dependencies
 ```bash
 # Install from the requirements located inside django/project/
+cd .\django\project\ 
 pip install --upgrade pip
-pip install -r django/project/requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Environment Variables
@@ -161,7 +159,7 @@ docker compose up --build
 
 ### Create a Password for the MQTT Broker
 ```bash
-docker run --rm -v "${PWD}/mosquitto/config:/mosquitto" eclipse-mosquitto   mosquitto_passwd -b /mosquitto/passwd <MQTT_USER> <MQTT_PASS>
+docker run --rm -v "${PWD}/mosquitto/config:/mosquitto" eclipse-mosquitto mosquitto_passwd -b /mosquitto/passwd <MQTT_USER> <MQTT_PASS>
 ```
 - **username:** `<MQTT_USER>`  
 - **password:** `<MQTT_PASS>`  
