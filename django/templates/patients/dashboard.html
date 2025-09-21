@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Welcome, {{ patient.first_name }}!</h2>
+
+    <p><strong>Ward:</strong> {{ patient.ward }}</p>
+    <p><strong>Bed:</strong> {{ patient.bed }}</p>
+
+    {% if remote %}
+        <h3 class="mt-4">🎮 Remote Control</h3>
+        
+        <!-- Remote Control Buttons -->
+        <div class="d-flex flex-wrap gap-3 mt-3">
+            <button id="nurse_call" onclick="sendCommand('nurse_call')" class="btn btn-lg btn-danger px-4 py-2">
+                <i class="bi bi-telephone-inbound"></i> Nurse Call
+            </button>
+            <button id="light" onclick="sendCommand('light')" class="btn btn-lg btn-warning px-4 py-2">
+                <i class="bi bi-lightbulb"></i> Light
+            </button>
+            <button id="volume_up" onclick="sendCommand('volume_up')" class="btn btn-lg btn-primary px-4 py-2">
+                <i class="bi bi-volume-up"></i> Vol +
+            </button>
+            <button id="volume_down" onclick="sendCommand('volume_down')" class="btn btn-lg btn-primary px-4 py-2">
+                <i class="bi bi-volume-down"></i> Vol –
+            </button>
+            <button id="channel_up" onclick="sendCommand('channel_up')" class="btn btn-lg btn-info px-4 py-2">
+                <i class="bi bi-arrow-up-circle"></i> Ch +
+            </button>
+            <button id="channel_down" onclick="sendCommand('channel_down')" class="btn btn-lg btn-info px-4 py-2">
+                <i class="bi bi-arrow-down-circle"></i> Ch –
+            </button>
+            <button id="tv_power" onclick="sendCommand('tv_power')" class="btn btn-lg btn-secondary px-4 py-2">
+                <i class="bi bi-tv"></i> TV Power
+            </button>
+        </div>
+
+        <!-- Add some spacing or explanations -->
+        <p class="mt-3 text-muted">Click on the buttons above to control the remote features of your bed.</p>
+
+    {% else %}
+        <p class="text-muted"><em>No remote assigned.</em></p>
+    {% endif %}
+</div>
+
+<script>
+    function sendCommand(type) {
+        const ledMap = {
+            nurse_call: 1,
+            light: 2,
+            volume_up: 3,
+            volume_down: 4,
+            channel_up: 5,
+            channel_down: 6,
+            tv_power: 7
+        };
+
+        // Disable buttons to prevent multiple clicks while waiting
+        document.getElementById(type).disabled = true;
+
+        // Add a loading indicator or change text to show it's processing
+        const button = document.getElementById(type);
+        button.innerHTML = 'Sending... <i class="bi bi-arrow-repeat" role="status"></i>';
+
+        fetch('/dashboard/publish/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                remote_id: "{{ remote.remote_id }}",
+                led_id: ledMap[type],
+                state: true
+            })
+        }).then(response => {
+            // Reset button state once command is processed
+            button.disabled = false;
+            button.innerHTML = button.innerHTML.split('...')[0]; // Restore original button text
+
+            // If it's a nurse call, trigger an alert
+            if (type === 'nurse_call') {
+                fetch('/alerts/create/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    },
+                    body: JSON.stringify({
+                        remote_id: "{{ remote.remote_id }}",
+                        alert_type: "nurse_call"
+                    })
+                });
+            }
+
+            // Show success message
+            alert(type.charAt(0).toUpperCase() + type.slice(1) + " command sent!");
+        }).catch(() => {
+            // Handle errors (e.g., server issues)
+            alert('There was an error sending the command. Please try again.');
+            button.disabled = false;
+            button.innerHTML = button.innerHTML.split('...')[0]; // Restore original button text
+        });
+    }
+</script>
+
+{% endblock %}

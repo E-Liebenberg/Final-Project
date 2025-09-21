@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+{% block title %}Patient Detail{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>🧑‍⚕️ Patient Detail: {{ patient.first_name }} {{ patient.last_name }}</h2>
+
+    <table class="table table-bordered mt-3">
+        <tr><th>Patient Number</th><td>{{ patient.patient_number }}</td></tr>
+        <tr><th>Ward</th><td>{{ patient.ward }}</td></tr>
+        <tr><th>Bed</th><td>{{ patient.bed }}</td></tr>
+        <tr><th>Gender</th><td>{{ patient.get_gender_display }}</td></tr>
+        <tr><th>Date of Birth</th><td>{{ patient.dob }}</td></tr>
+        <tr><th>RFID Tag</th><td>{{ patient.rfid_tag|default:"Not assigned" }}</td></tr>
+        <tr><th>Remote</th><td>{{ patient.remote.remote_id|default:"Unassigned" }}</td></tr>
+        <tr><th>Medical Condition</th><td>{{ patient.medical_condition|linebreaksbr }}</td></tr>
+        <tr><th>Doctor Notes</th><td>{{ patient.doctor_notes|linebreaksbr }}</td></tr>
+        <tr><th>Stock Used</th><td>{{ patient.stock_used|linebreaksbr }}</td></tr>
+        <tr><th>Stock Billed</th><td>{{ patient.stock_billed|linebreaksbr }}</td></tr>
+    </table>
+
+    <!-- Nurse Notes Section -->
+    <div class="mt-5">
+        <h4>📝 Nurse Notes</h4>
+        <a href="{% url 'nurse:add_nurse_note' patient.id %}" class="btn btn-sm btn-info mb-2">➕ Add Nurse Note</a>
+
+        {% if patient.nurse_notes.exists %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Type</th>
+                        <th>Note</th>
+                        <th>By</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for note in patient.nurse_notes.all %}
+                    <tr>
+                        <td>{{ note.timestamp|date:"Y-m-d H:i" }}</td>
+                        <td>{{ note.get_note_type_display }}</td>
+                        <td>{{ note.content|linebreaksbr }}</td>
+                        <td>{{ note.nurse.get_full_name|default:note.nurse.username }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-muted">No nurse notes yet.</p>
+        {% endif %}
+    </div>
+
+    <!-- Doctor Notes Section -->
+    <div class="mt-5">
+        <h4>📝 Doctor Notes</h4>
+        <a href="{% url 'doctors:add_doctor_note' patient.id %}" class="btn btn-sm btn-outline-primary mb-2">➕ Add Doctor Note</a>
+
+        {% if patient.doctor_notes.exists %}
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Doctor</th>
+                        <th>Note</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for note in patient.doctor_notes.all %}
+                    <tr>
+                        <td>{{ note.timestamp|date:"Y-m-d H:i" }}</td>
+                        <td>{{ note.doctor.get_full_name|default:note.doctor.username }}</td>
+                        <td>{{ note.content|linebreaksbr }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p class="text-muted">No doctor notes yet.</p>
+        {% endif %}
+    </div>
+
+    <a href="{% url 'nurse:nurse_dashboard' %}" class="btn btn-secondary mt-4">← Back to Dashboard</a>
+</div>
+{% endblock %}

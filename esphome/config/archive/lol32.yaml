@@ -1,0 +1,32 @@
+esphome:
+  name: lol32
+  friendly_name: lol32
+
+esp32:
+  board: esp32dev
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "MKZUmospnzhxkcd0TVsLZy7hAYL2KAMUopeAyif25NQ="
+
+ota:
+  - platform: esphome
+    password: "9bb35d9189e9537dd61cd005301164b2"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Lol32 Fallback Hotspot"
+    password: "iACNBElrzw4A"
+
+captive_portal:
+    

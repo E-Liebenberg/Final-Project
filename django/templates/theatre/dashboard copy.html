@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+  @keyframes flashBorder {
+    0% { border: 2px solid blue; }
+    50% { border: 2px solid red; }
+    100% { border: 2px solid blue; }
+  }
+
+  #code-blue-tile.flash-tile {
+    animation: flashBorder 1s infinite;
+  }
+
+  .badge {
+    font-size: 0.9em;
+    min-width: 50px;
+    text-align: center;
+  }
+
+  canvas {
+    max-width: 100%;
+  }
+</style>
+
+<div class="container mt-4">
+  <!-- Header -->
+  <h2 class="mb-3">🎛️ Theatre Monitoring Dashboard</h2>
+
+  <!-- System Status Banner -->
+  <div id="status-summary" class="alert alert-secondary d-flex align-items-center justify-content-between">
+    <div><strong>System Status:</strong> <span id="system-status-text">Normal</span></div>
+    <button id="dark-mode-toggle" class="btn btn-sm btn-outline-dark">Toggle Dark Mode</button>
+  </div>
+
+  <!-- Theatre Selection -->
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+    <h5 class="mb-0">Current Theatre: <span id="theatre-name-label" class="text-primary fw-bold">--</span></h5>
+    <div>
+      <label for="select-theatre" class="form-label fw-bold me-2">Select Theatre:</label>
+      <select id="select-theatre" class="form-select d-inline-block w-auto">
+        {% for theatre in theatres %}
+          <option value="{{ theatre }}">{{ theatre|title }}</option>
+        {% endfor %}
+      </select>
+    </div>
+  </div>
+
+  <!-- Environment Cards -->
+  <div class="row g-4 justify-content-center mb-4">
+    <div class="col-md-3">
+      <div class="card text-white bg-primary shadow h-100 text-center">
+        <div class="card-body">
+          <h5 class="card-title">🌡️ Temperature</h5>
+          <p id="temp-value" class="display-6 fw-bold">--</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card text-white bg-info shadow h-100 text-center">
+        <div class="card-body">
+          <h5 class="card-title">💧 Humidity</h5>
+          <p id="humidity-value" class="display-6 fw-bold">--</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3">
+      <div class="card text-white bg-success shadow h-100 text-center">
+        <div class="card-body">
+          <h5 class="card-title">🆔 Last RFID Tag</h5>
+          <p id="rfid-tag" class="fs-4 fw-bold">--</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart + LED Section -->
+  <div class="row g-4 mb-4">
+    <div class="col-12 col-lg-9">
+      <div class="card shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">📈 Temperature & Humidity Trend</h5>
+          <canvas id="tempHumidityChart" height="200" class="my-3 w-100"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 col-lg-3">
+      <div class="card bg-light shadow-sm h-100">
+        <div class="card-body">
+          <h5 class="card-title">💡 LED Status</h5>
+          <ul class="list-group" id="led-states">
+            <li class="list-group-item d-flex justify-content-between">Clean <span id="led-clean">--</span></li>
+            <li id="code-blue-tile" class="list-group-item d-flex justify-content-between bg-white">
+              Code Blue <span id="led-code-blue">--</span>
+              <audio id="code-blue-audio" src="{% static 'alert.mp3' %}" preload="auto"></audio>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">In Use <span id="led-in-use">--</span></li>
+            <li class="list-group-item d-flex justify-content-between">Lights <span id="led-lights">--</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Alerts Log -->
+  <div class="card shadow-sm mb-5">
+    <div class="card-body">
+      <h5 class="card-title">📜 Recent Alerts</h5>
+      <ul id="alert-log" class="list-group" style="max-height: 200px; overflow-y: auto;"></ul>
+    </div>
+  </div>
+
+  <!-- LED Controls -->
+  <div class="text-center mb-5">
+    <h5 class="mb-3">🕹 Control LEDs</h5>
+    <div class="d-flex flex-wrap justify-content-center">
+      <button onclick="toggleLed('clean')" class="btn btn-outline-success m-2"><i class="bi bi-bucket"></i> Clean</button>
+      <button onclick="toggleLed('code_blue')" class="btn btn-outline-danger m-2"><i class="bi bi-exclamation-octagon"></i> Code Blue</button>
+      <button onclick="toggleLed('in_use')" class="btn btn-outline-warning m-2"><i class="bi bi-person-fill"></i> In Use</button>
+      <button onclick="toggleLed('lights')" class="btn btn-outline-secondary m-2"><i class="bi bi-lightbulb-fill"></i> Lights</button>
+    </div>
+  </div>
+</div>
+
+<!-- Chart.js + Script Logic -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+let tempHumidityChart;
+let socket = null;
+
+function connectWebSocket(theatre) {
+  if (socket) socket.close();
+  const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+  socket = new WebSocket(`${protocol}://${window.location.host}/ws/theatre/dashboard/`);
+
+  socket.onmessage = function(event) {
+    const { topic, value } = JSON.parse(event.data);
+    if (!topic.startsWith(theatre)) return;
+
+    if (topic.endsWith("/temperature")) {
+      document.getElementById("temp-value").innerText = value;
+    } else if (topic.endsWith("/humidity")) {
+      document.getElementById("humidity-value").innerText = value;
+    } else if (topic.endsWith("/rfid/tag")) {
+      document.getElementById("rfid-tag").innerText = value;
+    } else if (topic.includes("/led/")) {
+      if (topic.includes("clean")) document.getElementById("led-clean").innerText = value;
+      if (topic.includes("in_use")) document.getElementById("led-in-use").innerText = value;
+      if (topic.includes("lights")) document.getElementById("led-lights").innerText = value;
+      if (topic.includes("code_blue")) {
+        const tile = document.getElementById("code-blue-tile");
+        const audio = document.getElementById("code-blue-audio");
+        document.getElementById("led-code-blue").innerText = value;
+
+        if (value === "ON") {
+          tile.classList.add("flash-tile", "text-black", "bg-danger");
+          audio.play();
+          addAlertLog("🚨 Code Blue activated!");
+          updateSystemStatus("Code Blue Active", "danger");
+        } else {
+          tile.classList.remove("flash-tile", "text-black", "bg-danger");
+          audio.pause();
+          audio.currentTime = 0;
+          addAlertLog("✅ Code Blue cleared");
+          updateSystemStatus("Normal", "secondary");
+        }
+      }
+    }
+  };
+}
+
+function toggleLed(ledName) {
+  const theatre = document.getElementById('select-theatre').value;
+  if (!theatre) return alert("Please select a theatre first!");
+  fetch(`/theatre/toggle_led/?led=${ledName}&theatre=${theatre}`)
+    .catch(error => console.error("Toggle LED error:", error));
+}
+
+function loadChartData(theatre) {
+  fetch(`/theatre/history/?theatre=${theatre}`)
+    .then(response => response.json())
+    .then(data => {
+      const tempData = data.temperature.reverse();
+      const humData = data.humidity.reverse();
+      const labels = tempData.map(entry => new Date(entry.timestamp).toLocaleTimeString());
+
+      if (tempHumidityChart) tempHumidityChart.destroy();
+      const ctx = document.getElementById('tempHumidityChart').getContext('2d');
+      tempHumidityChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels,
+          datasets: [
+            { label: 'Temperature (°C)', data: tempData.map(e => e.value), borderColor: 'red', fill: false },
+            { label: 'Humidity (%)', data: humData.map(e => e.value), borderColor: 'blue', fill: false }
+          ]
+        }
+      });
+    });
+}
+
+function addAlertLog(message) {
+  const logList = document.getElementById("alert-log");
+  const li = document.createElement("li");
+  li.className = "list-group-item";
+  li.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+  logList.prepend(li);
+  if (logList.children.length > 15) logList.removeChild(logList.lastChild);
+}
+
+function updateSystemStatus(message, severity = 'secondary') {
+  const summary = document.getElementById("status-summary");
+  const text = document.getElementById("system-status-text");
+  summary.className = `alert alert-${severity} d-flex align-items-center justify-content-between`;
+  text.innerText = message;
+}
+
+document.getElementById("dark-mode-toggle").addEventListener("click", () => {
+  document.body.classList.toggle("bg-dark");
+  document.body.classList.toggle("text-light");
+  document.querySelectorAll('.card, .alert, .list-group-item').forEach(el => {
+    el.classList.toggle("bg-dark");
+    el.classList.toggle("text-light");
+    el.classList.toggle("border-light");
+  });
+});
+
+document.getElementById('select-theatre').addEventListener('change', function () {
+  const selected = this.value;
+  document.getElementById('theatre-name-label').innerText = selected;
+  connectWebSocket(selected);
+  loadChartData(selected);
+});
+
+
+window.addEventListener('DOMContentLoaded', () => {
+  const selected = document.getElementById('select-theatre').value;
+  if (selected) {
+    document.getElementById('theatre-name-label').innerText = selected;
+    connectWebSocket(selected);
+    loadChartData(selected);
+  }
+});
+</script>
+{% endblock %}

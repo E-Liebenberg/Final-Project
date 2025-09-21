@@ -1,0 +1,192 @@
+esphome:
+  name: firebeetle
+  friendly_name: FireBeetle
+
+esp32:
+  board: firebeetle32
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "+4u8OKTyErcACVitmTv9+ne9JJ3A1P93r3ErB0nsZSg="
+
+ota:
+  - platform: esphome
+    password: "09c926ebba1c3115232ec68a1de5297e"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  use_address: 192.168.5.183
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Firebeetle Fallback Hotspot"
+    password: "Duf3pfgNJ0wB"
+
+captive_portal:
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+# Buttons and Sensors
+binary_sensor:
+  - platform: gpio
+    pin: GPIO9 
+    name: "Nurse Call Button"
+    on_press:
+      then:
+        - mqtt.publish:
+            topic: "nursecall/nurse_call"
+            payload: "pressed"
+        - light.turn_on: red_led
+    on_release:
+      then:
+        - light.turn_off: red_led
+
+  - platform: gpio
+    pin: GPIO2
+    name: "Code Blue Button"
+    on_press:
+      then:
+        - mqtt.publish:
+            topic: "nursecall/code_blue"
+            payload: "pressed"
+        - light.turn_on: blue_led
+    on_release:
+      then:
+        - light.turn_off: blue_led
+
+  - platform: gpio
+    pin: GPIO16
+    name: "PIR Motion Sensor"
+    on_press:
+      then:
+        - mqtt.publish:
+            topic: "nursecall/movement"
+            payload: detected
+        - light.turn_on: green_led
+    on_release:
+      then:
+        - light.turn_off: green_led
+
+  - platform: gpio
+    pin: GPIO15  # Digital pin for sound threshold detection
+    name: "Sound Detection"
+    on_press:
+      then:
+        - mqtt.publish:
+            topic: "nursecall/loud_sound"
+            payload: "detected"
+
+# RGB LED
+light:
+  - platform: rgb
+    name: "Nurse Call LED"
+    id: red_led
+    red: GPIO4   
+    green: GPIO5  
+    blue: GPIO6  
+    restore_mode: ALWAYS_ON
+
+  - platform: rgb
+    name: "Code Blue LED"
+    id: blue_led
+    red: GPIO4    
+    green: GPIO5  
+    blue: GPIO6 
+    restore_mode: ALWAYS_ON
+
+  - platform: rgb
+    name: "PIR LED"
+    id: green_led
+    red: GPIO4    
+    green: GPIO5  
+    blue: GPIO6 
+    restore_mode: ALWAYS_ON
+
+# Sound Sensor
+sensor:
+  # - platform: adc
+  #   pin: GPIO8 # Analog pin for sound level
+  #   name: "Sound Sensor"
+  #   update_interval: 1s
+  #   filters:
+  #     - calibrate_linear:
+  #         - 0.0 -> 0.0
+  #         - 1023.0 -> 5.0  # Adjust this based on your sensor's range
+  #   on_value_range:
+  #     - below: 1.0
+  #       then:
+  #         - mqtt.publish:
+  #             topic: "nursecall/fall"
+  #             payload: "detected"
+  #     - above: 2.0
+  #       then:
+  #         - mqtt.publish:
+  #             topic: "nursecall/loud_sound"
+  #             payload: "detected"
+
+  - platform: dht
+    pin: GPIO14
+    model: DHT22
+    temperature:
+      name: "Room Temperature"
+      id: room_temp
+      unit_of_measurement: "°C"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: nursecall/temperature
+              payload: !lambda 'return str_sprintf("%.1f °C", x);'
+    humidity:
+      name: "Room Humidity"
+      id: room_humidity
+      unit_of_measurement: "%"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: nursecall/humidity
+              payload: !lambda 'return str_sprintf("%.1f %%", x);'
+    update_interval: 30s
+
+# RC522 RFID Configuration using SPI
+spi:
+  clk_pin: GPIO20  # SCK
+  mosi_pin: GPIO22  # MOSI
+  miso_pin: GPIO21  # MISO
+  id: bus_spi
+
+# RC522 Reader
+rc522_spi:
+  id: nfc_reader
+  cs_pin: GPIO19  # SDA/CS (D2)
+  update_interval: 1s
+  on_tag:
+    then:
+      - logger.log: "Tag detected"
+      - logger.log: "Tag UID: {{ uid }}"
+      - mqtt.publish:
+          topic: "rfid/tag"
+          payload: "{{ uid }}"
+      - text_sensor.template.publish:
+          id: last_rfid_sensor
+          state: "{{ uid }}"
+
+# Custom Component (RC522 RFID Reader)
+text_sensor:
+  - platform: template
+    name: "Last RFID Tag"
+    id: last_rfid_sensor
+    lambda: |-
+      return id(nfc_reader).get_tag().c_str();

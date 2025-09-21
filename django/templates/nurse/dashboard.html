@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block title %}Nurse Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">🧑‍⚕️ Nurse Dashboard</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Patient</th>
+                <th>Ward</th>
+                <th>Bed</th>
+                <th>Remote</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in patients %}
+            <tr>
+                <td>
+                    <a href="{% url 'nurse:patient_detail' patient.id %}">
+                        {{ patient.first_name }} {{ patient.last_name }}
+                    </a>
+                </td>
+                <td>{{ patient.ward }}</td>
+                <td>{{ patient.bed }}</td>
+                <td>
+                    {% if patient.remote %}
+                        {{ patient.remote.remote_id }}
+                    {% else %}
+                        <span class="text-muted">Unassigned</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if patient.remote %}
+                        <div class="btn-group mb-1" role="group">
+                            <a href="{% url 'nurse:edit_remote' patient.id %}" class="btn btn-sm btn-outline-primary">Edit Remote</a>
+                            <a href="{% url 'nurse:remove_remote' patient.id %}" class="btn btn-sm btn-outline-danger">Remove</a>
+                        </div>
+                    {% else %}
+                        <a href="{% url 'nurse:assign_remote' patient.id %}" class="btn btn-sm btn-outline-success mb-1">
+                            Assign Remote
+                        </a>
+                    {% endif %}
+                    <div class="mt-1">
+                        <a href="{% url 'nurse:bill_stock' patient.id %}" class="btn btn-sm btn-outline-warning">💊 Bill Stock</a>
+                    </div>
+                    <div class="mt-1">
+                        <a href="{% url 'nurse:add_nurse_note' patient.id %}" class="btn btn-sm btn-outline-info">📝 Add Nurse Note</a>
+                    </div>
+
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="5" class="text-center">No admitted patients.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

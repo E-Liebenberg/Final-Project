@@ -1,0 +1,74 @@
+esphome:
+  name: rfid
+  friendly_name: rfid
+
+esp8266:
+  board: d1_mini_pro
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "KXWW2rp60AiNT21eZigXoo9dzbNX/jqfWPjX48sLTCg="
+
+ota:
+  - platform: esphome
+    password: "229e4e205fbf7d1419570b42a05fbe7e"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  use_address: 192.168.5.184
+  
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "D1-Minipro Fallback Hotspot"
+    password: "qwYvKpZxm8N6"
+
+captive_portal:
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+# SPI interface for RC522
+spi:
+  clk_pin: GPIO14  # SCK (D5)
+  mosi_pin: GPIO13 # MOSI (D7)
+  miso_pin: GPIO12 # MISO (D6)
+
+# RC522 RFID Reader
+rc522_spi:
+  cs_pin: GPIO4    # SDA / CS (D2)
+  update_interval: 1s
+  on_tag:
+    then:
+      - lambda: |-
+          id(last_rfid_uid) = x;
+      - text_sensor.template.publish:
+          id: last_rfid_sensor
+          state: !lambda 'return x;'
+      - mqtt.publish:
+          topic: rfid/tag
+          payload: !lambda 'return x;'
+      - logger.log:
+          format: "Tag detected: %s"
+          args: [ 'x.c_str()' ]
+
+globals:
+  - id: last_rfid_uid
+    type: std::string
+    restore_value: no
+    initial_value: '"No tag"'
+
+text_sensor:
+  - platform: template
+    name: "Last RFID Tag"
+    id: last_rfid_sensor
+    lambda: |-
+      return id(last_rfid_uid);

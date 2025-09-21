@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}All {{ alert_type|title }} Alerts{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">📋 Full Alert List: {{ alert_type|title }}</h2>
+
+    {% if alerts %}
+        <div class="row row-cols-1 row-cols-md-2 g-4">
+            {% for alert in alerts %}
+            <div class="col">
+                <div class="card border-secondary shadow-sm h-100">
+                    <div class="card-body bg-light">
+                        <h5 class="card-title">
+                            <span class="badge bg-secondary">{{ alert.alert_type|title }}</span>
+                        </h5>
+                        <p class="card-text mb-1"><strong>Patient:</strong>
+                            {% if alert.patient %}
+                                <a href="{% url 'nurse:patient_detail' alert.patient.id %}">
+                                    {{ alert.patient.first_name }} {{ alert.patient.last_name }}
+                                </a>
+                            {% else %}
+                                <em>Unknown</em>
+                            {% endif %}
+                        </p>
+                        <p class="card-text mb-1"><strong>Ward/Bed:</strong>
+                            {% if alert.remote %}
+                                {{ alert.remote.ward }}/{{ alert.remote.bed }}
+                            {% else %}
+                                <em>Unknown</em>
+                            {% endif %}
+                        </p>
+                        <p class="card-text"><strong>Time:</strong> {{ alert.timestamp|date:"F j, Y, g:i a" }}</p>
+                        <a href="{% url 'alerts:acknowledge' alert.id %}" class="btn btn-sm btn-outline-success">
+                            ✅ Acknowledge
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-warning">No active {{ alert_type|title }} alerts.</div>
+    {% endif %}
+
+    <a href="{% url 'alerts:dashboard' %}" class="btn btn-outline-primary mt-4">← Back to Main Dashboard</a>
+</div>
+{% endblock %}

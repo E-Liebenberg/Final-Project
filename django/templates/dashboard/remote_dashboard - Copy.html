@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ remote.ward }} - {{ remote.bed }} Remote</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        .led-button.on {
+            background-color: green;
+            color: white;
+        }
+
+        .led-button.off {
+            background-color: gray;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ remote.ward }} - {{ remote.bed }}</h1>
+
+    <div class="remote-buttons">
+    {% for i in "1234567" %}
+        <button id="led{{ i }}" onclick="toggleLED({{ i }})" class="led-button off">
+            Toggle LED {{ i }}
+        </button>
+    {% endfor %}
+    </div>
+
+    <script>
+        const remoteId = "{{ remote.remote_id }}";
+        const socket = new WebSocket(`ws://${window.location.host}/ws/dashboard/${remoteId}/`);
+        const ledStates = {};
+
+        // Initialize all as false (off)
+        for (let i = 1; i <= 7; i++) {
+            ledStates[i] = false;
+        }
+
+        socket.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            console.log("WebSocket update:", data);
+
+            if (data.type === "led_state_update") {
+                const ledMap = {
+                    nurse: 1,
+                    light: 2,
+                    volume_up: 3,
+                    volume_down: 4,
+                    channel_up: 5,
+                    channel_down: 6,
+                    tv_power: 7
+                };
+
+                const ledId = ledMap[data.led_name];
+                const isOn = data.led_state === "ON";
+
+                if (ledId) {
+                    ledStates[ledId] = isOn;
+                    updateButtonState(ledId);
+                }
+            }
+
+            if (data.alert_type === "code_blue") {
+                alert("🚨 Code Blue triggered!");
+            }
+        };
+
+        socket.onopen = () => console.log("WebSocket connected");
+        socket.onclose = () => console.warn("WebSocket closed");
+
+        function toggleLED(ledId) {
+            ledStates[ledId] = !ledStates[ledId];  // Flip state
+
+            fetch('/dashboard/publish/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    mac: remoteId,
+                    led_id: ledId,
+                    state: ledStates[ledId]
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log('MQTT Sent:', data);
+                updateButtonState(ledId);
+            })
+            .catch(err => console.error("Error sending MQTT:", err));
+        }
+
+        function updateButtonState(ledId) {
+            const btn = document.getElementById(`led${ledId}`);
+            if (!btn) return;
+            if (ledStates[ledId]) {
+                btn.classList.add("on");
+                btn.classList.remove("off");
+            } else {
+                btn.classList.add("off");
+                btn.classList.remove("on");
+            }
+        }
+    </script>
+</body>
+</html>

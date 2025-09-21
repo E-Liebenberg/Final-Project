@@ -1,0 +1,168 @@
+
+{% load static %}
+{% load custom_filters %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ remote.ward }} - {{ remote.bed }} Remote</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        .led-button.on {
+            background-color: green;
+            color: white;
+        }
+
+        .led-button.off {
+            background-color: gray;
+            color: black;
+        }
+
+        .flash {
+            animation: flash-red 1s infinite;
+        }
+
+        @keyframes flash-red {
+            0% { background-color: red; }
+            50% { background-color: white; }
+            100% { background-color: red; }
+        }
+
+        .tile.active {
+            border: 2px solid red;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ remote.ward }} - {{ remote.bed }}</h1>
+
+    <div class="remote-buttons">
+        {% for i in "1234567" %}
+            <button id="led{{ i }}" onclick="toggleLED({{ i }})" class="led-button off">
+                {{ button_labels|index:forloop.counter0 }}
+            </button>
+        {% endfor %}
+    </div>
+
+    <div id="alert-log" style="margin-top: 20px;"></div>
+
+    <div class="led-tile" id="led-nurse">Nurse Call</div>
+    <div class="led-tile" id="led-light">Light Toggle</div>
+
+    <script>
+    const remoteId = "{{ remote.remote_id }}";
+    const socket = new WebSocket(`ws://${window.location.host}/ws/dashboard/${remoteId}/`);
+    const ledStates = {};
+
+    // Initialize ledStates to OFF
+    for (let i = 1; i <= 7; i++) {
+        ledStates[i] = false;
+    }
+
+    // WebSocket message handler
+    socket.onmessage = function(event) {
+        const data = JSON.parse(event.data);
+        console.log("WebSocket update:", data);
+
+        if (data.type === "led_state_update") {
+            const ledMap = {
+                nurse: 1,
+                light: 2,
+                volume_up: 3,
+                volume_down: 4,
+                channel_up: 5,
+                channel_down: 6,
+                tv_power: 7
+            };
+
+            const ledId = ledMap[data.led_name];
+            const isOn = data.led_state === "ON";
+
+            if (ledId !== undefined) {
+                ledStates[ledId] = isOn;
+                updateButtonState(ledId);
+            }
+        }
+
+        // Handle alert types such as 'code_blue'
+        if (data.type === 'send_alert') {
+            const alertType = data.data.alert_type;
+            const tile = document.getElementById(`led-${alertType}`);
+            if (tile) {
+                tile.classList.add("active");
+                tile.classList.add("flash");
+            }
+
+            const log = document.getElementById("alert-log");
+            if (log) {
+                const time = new Date().toLocaleTimeString();
+                log.innerHTML += `<p>[${time}] ${alertType.toUpperCase()} activated</p>`;
+            }
+
+            if (alertType === "code_blue") {
+                alert("🚨 Code Blue triggered!");
+            }
+        }
+    };
+
+    socket.onopen = () => console.log("WebSocket connected");
+    socket.onclose = () => console.warn("WebSocket closed");
+
+    function toggleLED(ledId) {
+        ledStates[ledId] = !ledStates[ledId];
+
+        fetch('/dashboard/publish/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                remote_id: remoteId,
+                led_id: ledId,
+                state: ledStates[ledId]
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log('MQTT Sent:', data);
+            updateButtonState(ledId);
+        })
+        .catch(err => console.error("Error sending MQTT:", err));
+    }
+
+    function updateButtonState(ledId) {
+        const btn = document.getElementById(`led${ledId}`);
+        if (!btn) return;
+
+        if (ledStates[ledId]) {
+            btn.classList.add("on");
+            btn.classList.remove("off");
+        } else {
+            btn.classList.add("off");
+            btn.classList.remove("on");
+        }
+    }
+
+    window.addEventListener('load', () => {
+        // Set all buttons to initial OFF state
+        for (let i = 1; i <= 7; i++) {
+            updateButtonState(i);
+        }
+
+        // Trigger sync to get real states from ESP
+        fetch('/dashboard/publish/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({
+                remote_id: remoteId,
+                led_id: "sync",
+                state: true
+            })
+        });
+    });
+    </script>
+</body>
+</html>

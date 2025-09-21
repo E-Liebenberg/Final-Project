@@ -1,0 +1,30 @@
+esphome:
+  name: d1-micro
+  friendly_name: d1-micro
+
+esp8266:
+  board: d1_mini_pro
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "/KdYavPY+YAaiFoXAUzCVXhTMa6pFax3vjzJ/KBRke0="
+
+ota:
+  - platform: esphome
+    password: "41765895dbd2fba653fd7f2d7da24e74"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "D1-Micro Fallback Hotspot"
+    password: "WUTMENDFpufu"
+
+captive_portal:
+    

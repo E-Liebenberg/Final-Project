@@ -1,0 +1,163 @@
+esphome:
+  name: fire6
+  friendly_name: fire6
+
+esp32:
+  board: esp32-c6-devkitc-1
+  variant: esp32c6
+  flash_size: 4MB
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "T2 Fallback Hotspot"
+    password: "nqs9K4bLLP9Q"
+
+captive_portal:
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  port: 1883
+
+
+# SPI interface for RC522
+spi:
+  clk_pin: GPIO23  # SCK
+  mosi_pin: GPIO22 # MOSI
+  miso_pin: GPIO21 # MISO 
+
+# RC522 RFID Reader
+rc522_spi:
+  cs_pin: GPIO19 # SDA / CS
+  update_interval: 1s
+  on_tag:
+    then:
+      - logger.log:
+          format: "Tag detected: %s"
+          args: [ 'x.c_str()' ]
+  
+# --- Temp and Hum Sensor --
+sensor:
+  - platform: dht
+    pin: GPIO14
+    model: DHT11
+    temperature:
+      name: "Room Temperature"
+      id: room_temp
+      unit_of_measurement: "°C"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: nursecall/temperature
+              payload: !lambda 'return str_sprintf("%.1f °C", x);'
+    humidity:
+      name: "Room Humidity"
+      id: room_humidity
+      unit_of_measurement: "%"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: nursecall/humidity
+              payload: !lambda 'return str_sprintf("%.1f %%", x);'
+    update_interval: 10s
+
+# --- Button for cleaning, code blue, in use, light toggle -- 
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO16
+      inverted: True
+    name: "Cleaning Button"
+    on_press:
+      - logger.log: "Cleaning Button Pressed"
+      - output.turn_on: cleaning_led
+      - mqtt.publish:
+          topic: nursecall/cleaning
+          payload: "cleaning"
+    on_release:
+      - output.turn_off: cleaning_led
+
+  - platform: gpio
+    pin:
+      number: GPIO6
+      inverted: True
+    name: "Code Blue Button"
+    on_press:
+      - logger.log: "Code Blue Button Pressed"
+      - output.turn_on: code_blue_led
+      - mqtt.publish:
+          topic: nursecall/codeblue
+          payload: "codeblue"
+    on_release:
+      - output.turn_off: code_blue_led
+
+  - platform: gpio
+    pin:
+      number: GPIO7
+      inverted: True
+    name: "In Use Button"
+    on_press:
+      - output.turn_on: in_use_led
+      - logger.log: "In Use Button Pressed"
+      - mqtt.publish:
+          topic: nursecall/inuse
+          payload: "inuse"
+    on_release:
+      - output.turn_off: in_use_led
+
+  - platform: gpio
+    pin:
+      number: GPIO3
+      inverted: True
+    name: "Light Button"
+    on_press:
+      - logger.log: "Light Button Pressed"
+      - output.turn_on: light_led
+      - mqtt.publish:
+          topic: nursecall/light
+          payload: "on"
+    on_release:
+      - output.turn_off: light_led
+
+# --- KY-009 RGB LED for status indicators (Green, Blue, Red) ---
+output:
+  - platform: ledc
+    pin: GPIO17  # Green (Cleaning)
+    id: cleaning_led
+  - platform: ledc
+    pin: GPIO18  # Blue (Code Blue)
+    id: code_blue_led
+  - platform: ledc
+    pin: GPIO5   # Red (In Use)
+    id: in_use_led
+
+# --- Separate Light LED ---
+  - platform: gpio
+    pin: GPIO2
+    id: light_led
+# First run
+# esphome clean fireb2.yaml
+# then
+# esphome run fireb2.yaml

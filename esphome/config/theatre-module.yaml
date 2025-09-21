@@ -1,0 +1,138 @@
+esphome:
+  name: theatre-module
+  friendly_name: Theatre Module
+
+esp8266:
+  board: d1_mini_pro
+
+logger:
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  ap:
+    ssid: "D1-Minipro Fallback Hotspot"
+    password: "qwYvKpZxm8N6"
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+captive_portal:
+
+# --- DHT11 Sensor ---
+sensor:
+  - platform: dht
+    pin: GPIO0  # D3
+    temperature:
+      name: "Theatre Temperature"
+      state_topic: theatre/temperature
+    humidity:
+      name: "Theatre Humidity"
+      state_topic: theatre/humidity
+    model: DHT11
+    update_interval: 30s
+
+# --- SPI for RC522 (keep these pins as requested) ---
+spi:
+  clk_pin: GPIO14  # D5
+  mosi_pin: GPIO13 # D7
+  miso_pin: GPIO12 # D6
+
+# --- RC522 RFID Reader ---
+rc522_spi:
+  cs_pin: GPIO4  # D2
+  update_interval: 1s
+  on_tag:
+    then:
+      - mqtt.publish:
+          topic: theatre/rfid
+          payload: !lambda 'return x;'
+      - logger.log:
+          format: "Tag detected: %s"
+          args: ['x.c_str()']
+
+# --- Buttons ---
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO3  # RX
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "Code Blue Button"
+    on_press:
+      then:
+        - logger.log: "Code Blue Triggered"
+        - mqtt.publish:
+            topic: theatre/code_blue
+            payload: "triggered"
+        - light.turn_on:
+            id: status_light
+            red: 0.0
+            green: 0.0
+            blue: 1.0
+
+  - platform: gpio
+    pin:
+      number: GPIO1  # TX
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "Room Light Button"
+    on_press:
+      then:
+        - mqtt.publish:
+            topic: theatre/light
+            payload: "on"
+        - light.turn_on:
+            id: status_light
+            red: 1.0
+            green: 1.0
+            blue: 1.0
+
+  - platform: gpio
+    pin:
+      number: GPIO5  # D1 (safe)
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "Clean Theatre Button"
+    on_press:
+      then:
+        - mqtt.publish:
+            topic: theatre/clean
+            payload: "needed"
+        - light.turn_on:
+            id: status_light
+            red: 0.0
+            green: 1.0
+            blue: 0.0
+
+# --- KY-009 RGB LED (via PWM on unused, safe pins) ---
+output:
+  - platform: esp8266_pwm
+    id: red_pwm
+    pin: GPIO2  # D4 (safe) 
+  - platform: esp8266_pwm
+    id: green_pwm
+    pin: GPIO15  # D8
+  - platform: esp8266_pwm
+    id: blue_pwm
+    pin: GPIO16 # D0
+
+light:
+  - platform: rgb
+    name: "Theatre Status Light"
+    red: red_pwm
+    green: green_pwm
+    blue: blue_pwm
+    id: status_light

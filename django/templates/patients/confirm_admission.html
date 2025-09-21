@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Confirm Admission</h2>
+<p>{{ patient.first_name }} {{ patient.last_name }}</p>
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Confirm & Assign RFID</button>
+</form>
+{% endblock %}

@@ -1,0 +1,42 @@
+substitutions:
+  ward: "t1"
+  bed: "t1"
+  remote_id: "${ward}_${bed}_remote"
+
+esphome:
+  name: ${remote_id}
+  friendly_name: ${remote_id}
+
+esp32:
+  board: nodemcu-32s
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  use_address: 192.168.5.230 #static ip for now
+    
+  ap:
+    ssid: "${remote_id}_Hotspot"
+    password: "fallback123"
+
+captive_portal:
+  
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+

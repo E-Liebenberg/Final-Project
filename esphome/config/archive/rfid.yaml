@@ -1,0 +1,32 @@
+esphome:
+  name: rfid
+  friendly_name: rfid
+
+esp32:
+  board: esp32-c6-devkitc-1
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "CuVit6riSPN7PJOzxYQO2VG/s6LI+bBsHWQZh3GcpH4="
+
+ota:
+  - platform: esphome
+    password: "37d52e6b05f2b5b59c843cd7a3b06d44"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Rfid Fallback Hotspot"
+    password: "gJceR079ItOP"
+
+captive_portal:
+    

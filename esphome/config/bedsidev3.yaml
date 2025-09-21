@@ -1,0 +1,428 @@
+substitutions:
+  bed_id: bedsidev3
+
+esphome:
+  name: ${bed_id}_unit
+  friendly_name: ${bed_id}_unit
+
+esp32:
+  board: nodemcu-32s
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "Rfid32 Fallback Hotspot"
+    password: "JA3PKMmHSREP"
+
+captive_portal:
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+  on_message:
+    - topic: "${bed_id}/nursecall/code_blue/ack"
+      then:
+        - lambda: 'id(code_blue_active) = false;'
+        - light.turn_off: ky016_rgb_led
+        - switch.turn_off: buzzer
+
+    - topic: "${bed_id}/nursecall/nurse_call/ack"
+      then:
+        - lambda: 'id(nurse_call_active) = false;'
+        - light.turn_off: ky016_rgb_led
+        - switch.turn_off: buzzer
+
+    - topic: "${bed_id}/room/light/set"
+      then:
+        - lambda: |-
+            if (x == "on") {
+              id(room_light).turn_on();
+            } else {
+              id(room_light).turn_off();
+            }
+    
+    - topic: "${bed_id}/nursecall/no_movement/ack"
+      then:
+        - lambda: |-
+            id(no_movement_alert) = false;
+            id(no_movement_sent) = false;
+        - switch.turn_off: buzzer
+
+globals:
+  - id: code_blue_active
+    type: bool
+    initial_value: 'false'
+
+  - id: nurse_call_active
+    type: bool
+    initial_value: 'false'
+
+  - id: no_movement_alert
+    type: bool
+    initial_value: 'false'
+
+  - id: no_movement_sent
+    type: bool
+    initial_value: 'false'
+
+  - id: last_motion
+    type: unsigned long
+    initial_value: '0'
+
+  - id: last_rfid_uid
+    type: std::string
+    initial_value: '"No tag"'
+
+  - id: nurse_call_timestamp
+    type: unsigned long
+    initial_value: '0'
+
+output:
+  - platform: ledc
+    pin: GPIO5
+    id: red_pwm
+  - platform: ledc
+    pin: GPIO16
+    id: green_pwm
+  - platform: ledc
+    pin: GPIO27
+    id: blue_pwm
+  
+  # Light
+  - platform: gpio
+    pin: GPIO26
+    id: room_light_output
+
+light:
+  - platform: rgb
+    name: "${bed_id} KY016 RGB LED"
+    id: ky016_rgb_led
+    red: red_pwm
+    green: green_pwm
+    blue: blue_pwm
+    restore_mode: ALWAYS_OFF
+
+switch:
+  - platform: gpio
+    pin: GPIO32
+    name: "${bed_id} Buzzer"
+    id: buzzer
+    restore_mode: ALWAYS_OFF
+    on_turn_on:
+      then:
+        - mqtt.publish:
+            topic: "${bed_id}/nursecall/buzzer"
+            payload: "on"
+    on_turn_off:
+      then:
+        - mqtt.publish:
+            topic: "${bed_id}/nursecall/buzzer"
+            payload: "off"
+
+  # - platform: template
+  #   name: "Buzzer via MQTT"
+  #   id: buzzer_control
+  #   optimistic: true
+  #   turn_on_action:
+  #     - switch.turn_on: buzzer
+  #   turn_off_action:
+  #     - switch.turn_off: buzzer
+  
+  - platform: output
+    name: "${bed_id} Room Light"
+    id: room_light
+    output: room_light_output
+    restore_mode: RESTORE_DEFAULT_OFF
+    on_turn_on:
+      - mqtt.publish:
+          topic: "${bed_id}/room/light/status"
+          payload: "on"
+    on_turn_off:
+      - mqtt.publish:
+          topic: "${bed_id}/room/light/status"
+          payload: "off"
+
+binary_sensor:
+  # --- Nurse Call Button ---
+  - platform: gpio
+    pin:
+      number: GPIO12
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "${bed_id} Nurse Call Button"
+    on_press:
+      then:
+        - lambda: |-
+            id(nurse_call_active) = true;
+            id(nurse_call_timestamp) = millis();
+        - if:
+            condition:
+              lambda: 'return !id(code_blue_active);'
+            then:
+              - light.turn_on:
+                  id: ky016_rgb_led
+                  red: 100%
+                  green: 0%
+                  blue: 0%
+              - mqtt.publish:
+                  topic: "${bed_id}/nursecall/nurse_call"
+                  payload: "pressed"
+              - logger.log:
+                  level: INFO
+                  format: "Nurse Call Pressed"
+    on_release:
+      then:
+        - lambda: 'id(nurse_call_active) = false;'
+
+# --- Code Blue Button ---
+  - platform: gpio
+    pin:
+      number: GPIO13
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "${bed_id} Code Blue Button"
+    on_press:
+      then:
+        - lambda: 'id(code_blue_active) = true;'
+        - light.turn_on:
+            id: ky016_rgb_led
+            red: 0%
+            green: 0%
+            blue: 100%
+        - switch.turn_on: room_light    #  Automatically turn on room light
+        - mqtt.publish:
+            topic: "${bed_id}/nursecall/code_blue"
+            payload: "pressed"
+        - logger.log:
+            level: INFO
+            format: "Code Blue triggered"
+
+# --- Motion Sensor ---
+  - platform: gpio
+    pin: GPIO14
+    name: "${bed_id} PIR Motion Sensor"
+    on_press:
+      then:
+        - lambda: |-
+            id(last_motion) = millis();
+        - mqtt.publish:
+            topic: "${bed_id}/nursecall/movement"
+            payload: "detected"
+        - logger.log:
+            level: INFO
+            format: "Movement detected"
+
+  - platform: gpio
+    pin:
+      number: GPIO33
+      mode: INPUT_PULLUP
+      inverted: true
+    name: "${bed_id} Room Light Button"
+    on_press:
+      then:
+        - switch.toggle: room_light
+
+# --- Temp and Hum Sensor --
+sensor:
+  - platform: dht
+    pin: GPIO15
+    model: RHT03
+    temperature:
+      name: "${bed_id} Room Temperature"
+      id: room_temp
+      unit_of_measurement: "°C"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: "${bed_id}/nursecall/temperature"
+              payload: !lambda 'return str_sprintf("%.1f °C", x);'
+          - logger.log:
+              level: INFO
+              format: "Temperature: %.1f °C"
+              args: [ 'x' ]
+
+    humidity:
+      name: "${bed_id} Room Humidity"
+      id: room_humidity
+      unit_of_measurement: "%"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: "${bed_id}/nursecall/humidity"
+              payload: !lambda 'return str_sprintf("%.1f %%", x);'
+          - logger.log:
+              level: INFO
+              format: "Humidity: %.1f %%"
+              args: [ 'x' ]
+
+# --- Sound Sensor ---
+  - platform: adc
+    pin: GPIO34
+    name: "Sound Sensor"
+    update_interval: 1s
+    filters:
+      - calibrate_linear:
+          - 0.0 -> 0.0
+          - 1023.0 -> 3.3  # More realistic max for ESP32 ADC
+
+    on_value_range:
+      - above: 0.3
+        then:
+          - mqtt.publish:
+              topic: "${bed_id}/nursecall/loud_sound"
+              payload: "detected"
+          - lambda: |-
+              if (!id(code_blue_active) && !id(nurse_call_active)) {
+                auto call = id(ky016_rgb_led).turn_on();
+                call.set_red(1.0f);
+                call.set_green(0.5f);  // orange
+                call.set_blue(0.0f);
+                call.perform();
+              }
+          - logger.log:
+              level: INFO
+              format: "Loud sound detected"
+spi:
+  clk_pin: GPIO18   #sck
+  mosi_pin: GPIO23
+  miso_pin: GPIO19
+  id: bus_spi
+
+rc522_spi:
+  id: nfc_reader
+  cs_pin: GPIO21 # sda 
+  update_interval: 1s
+  on_tag:
+    then:
+      - lambda: |-
+          id(last_rfid_uid) = x;
+      - text_sensor.template.publish:
+          id: last_rfid_sensor
+          state: !lambda 'return x;'
+      - mqtt.publish:
+          topic: "${bed_id}/rfid/tag"
+          payload: !lambda 'return x;'
+      - logger.log:
+          format: "Tag detected: %s"
+          args: [ 'x.c_str()' ]
+
+text_sensor:
+  - platform: template
+    name: "${bed_id} Last RFID Tag"
+    id: last_rfid_sensor
+    lambda: |-
+      return id(last_rfid_uid);
+
+interval:
+  # Flash RGB when Code Blue is active
+  - interval: 500ms
+    then:
+      - if:
+          condition:
+            lambda: 'return id(code_blue_active);'
+          then:
+            - light.toggle:
+                id: ky016_rgb_led
+                transition_length: 0ms  # immediate toggle (flashing)
+
+  # Toggle buzzer for code blue (fast beeping)
+  - interval: 300ms
+    then:
+      - if:
+          condition:
+            lambda: 'return id(code_blue_active);'
+          then:
+            - switch.toggle: buzzer
+
+  # Continuous buzzer when nurse call is active (unless overridden by code blue)
+  - interval: 1s
+    then:
+      - if:
+          condition:
+            lambda: 'return id(nurse_call_active) && !id(code_blue_active);'
+          then:
+            - switch.turn_on: buzzer
+      - if:
+          condition:
+            lambda: 'return !id(nurse_call_active) && !id(code_blue_active);'
+          then:
+            - switch.turn_off: buzzer
+
+  # Auto turn off RGB light 5 seconds after nurse call release (if code blue not active)
+  - interval: 500ms
+    then:
+      - lambda: |-
+          unsigned long now = millis();
+          if (!id(code_blue_active)) {
+            if (!id(nurse_call_active) && (now - id(nurse_call_timestamp) > 5000)) {
+              id(ky016_rgb_led).turn_off();
+            }
+          }
+
+  # No movement detection: if no motion for 10s, beep and send MQTT once
+  - interval: 1s
+    then:
+      - lambda: |-
+          unsigned long now = millis();
+          if (!id(code_blue_active) && !id(nurse_call_active)) {
+            if ((now - id(last_motion)) > 10000) {
+              if (!id(no_movement_alert)) {
+                id(no_movement_alert) = true;
+                id(no_movement_sent) = false;
+              }
+              if (!id(no_movement_sent)) {
+                id(buzzer).turn_on();
+                delay(1000);
+                id(buzzer).turn_off();
+                id(no_movement_sent) = true;
+                mqtt::global_mqtt_client->publish("${bed_id}/nursecall/no_movement", "true");
+              }
+            } else {
+              // Movement was recently detected, reset alert state
+              id(no_movement_alert) = false;
+              id(no_movement_sent) = false;
+            }
+          }
+
+# Flash green LED once for 1s on motion
+  - interval: 1s
+    then:
+      - lambda: |-
+          static bool led_flashing = false;
+          static unsigned long green_start = 0;
+          unsigned long now = millis();
+
+          if (!id(code_blue_active) && !id(nurse_call_active)) {
+            if ((now - id(last_motion)) <= 100) {
+              // New motion just detected → turn on green LED
+              auto call = id(ky016_rgb_led).turn_on();
+              call.set_red(0.0f);
+              call.set_green(1.0f);
+              call.set_blue(0.0f);
+              call.perform();
+              green_start = now;
+              led_flashing = true;
+            } else if (led_flashing && (now - green_start > 1000)) {
+              // 1s has passed → turn off LED
+              id(ky016_rgb_led).turn_off();
+              led_flashing = false;
+            }
+          }

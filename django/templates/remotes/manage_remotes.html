@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Manage Remotes</h2>
+
+  <table class="table table-bordered table-striped">
+    <thead>
+      <tr>
+        <th>Remote ID</th>
+        <th>MAC Address</th>
+        <th>IP Address</th>
+        <th>Ward</th>
+        <th>Bed</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for remote in remotes %}
+        <tr>
+          <td>{{ remote.remote_id|default:"(Unassigned)" }}</td>
+          <td>{{ remote.mac_address|default:"-" }}</td>
+          <td>{{ remote.ip_address|default:"-" }}</td>
+          <td>{{ remote.ward }}</td>
+          <td>{{ remote.bed }}</td>
+            <td>
+            {% if remote.patient %}
+                ✅ Assigned to {{ remote.patient.first_name }} {{ remote.patient.last_name }}
+            {% elif remote.ward and remote.bed %}
+                ✅ Assigned to Bed Only
+            {% else %}
+                ❌ Not Assigned
+            {% endif %}
+            </td>
+          <td>
+            <a href="{% url 'remotes:edit_remote' remote.id %}" class="btn btn-sm btn-warning">Edit</a>
+            <a href="{% url 'remotes:delete_remote' remote.id %}" class="btn btn-sm btn-danger">Delete</a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="7" class="text-center">No remotes found.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <a href="{% url 'remotes:add_remote' %}" class="btn btn-success">➕ Add Remote</a>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <h1>Admission Successful</h1>
+
+    <p>Patient <strong>{{ patient.first_name }} {{ patient.last_name }}</strong> has been recorded with patient number:
+        <strong>{{ patient.patient_number }}</strong>.
+    </p>
+
+    <p>Admission still needs to be confirmed by an admin clerk.</p>
+
+    <p><a href="{% url 'admit_patient' %}">Admit another patient</a></p>
+    <p><a href="{% url 'home' %}">Go to Home</a></p>
+{% endblock %}

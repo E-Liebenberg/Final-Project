@@ -1,0 +1,133 @@
+esphome:
+  name: dht22
+  friendly_name: DHT22
+
+esp8266:
+  board: d1_mini
+
+logger:
+
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  ap:
+    ssid: "Dht22 Fallback Hotspot"
+    password: "BOOzlQgojC5s"
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+captive_portal:
+
+sensor:
+  - platform: dht
+    pin: GPIO15
+    model: DHT22
+    temperature:
+      name: "Room 1 Temperature"
+      id: room1_temp
+      unit_of_measurement: "°C"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: nursecall/room1/temperature
+              payload: !lambda 'return str_sprintf("%.1f °C", x);'
+    humidity:
+      name: "Room 1 Humidity"
+      id: room1_humidity
+      unit_of_measurement: "%"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: nursecall/room1/humidity
+              payload: !lambda 'return str_sprintf("%.1f %%", x);'
+    update_interval: 10s
+
+  # - platform: dht
+  #   pin: GPIO4
+  #   model: DHT22_TYPE2
+  #   temperature:
+  #     name: "Room 2 Temperature"
+  #     id: room2_temp
+  #     unit_of_measurement: "°C"
+  #     accuracy_decimals: 1
+  #     on_value:
+  #       then:
+  #         - mqtt.publish:
+  #             topic: nursecall/room2/temperature
+  #             payload: !lambda 'return str_sprintf("%.1f °C", x);'
+  #   humidity:
+  #     name: "Room 2 Humidity"
+  #     id: room2_humidity
+  #     unit_of_measurement: "%"
+  #     accuracy_decimals: 1
+  #     on_value:
+  #       then:
+  #         - mqtt.publish:
+  #             topic: nursecall/room2/humidity
+  #             payload: !lambda 'return str_sprintf("%.1f %%", x);'
+  #   update_interval: 10s
+
+  # - platform: dht
+  #   pin: GPIO3
+  #   model: RHT03
+  #   temperature:
+  #     name: "Room 3 Temperature"
+  #     id: room3_temp
+  #     unit_of_measurement: "°C"
+  #     accuracy_decimals: 1
+  #     on_value:
+  #       then:
+  #         - mqtt.publish:
+  #             topic: nursecall/room3/temperature
+  #             payload: !lambda 'return str_sprintf("%.1f °C", x);'
+  #   humidity:
+  #     name: "Room 3 Humidity"
+  #     id: room3_humidity
+  #     unit_of_measurement: "%"
+  #     accuracy_decimals: 1
+  #     on_value:
+  #       then:
+  #         - mqtt.publish:
+  #             topic: nursecall/room3/humidity
+  #             payload: !lambda 'return str_sprintf("%.1f %%", x);'
+  #   update_interval: 10s
+
+  # - platform: dht
+  #   pin: GPIO5
+  #   model: AM2120
+  #   temperature:
+  #     name: "Room 4 Temperature"
+  #     id: room4_temp
+  #     unit_of_measurement: "°C"
+  #     accuracy_decimals: 1
+  #     on_value:
+  #       then:
+  #         - mqtt.publish:
+  #             topic: nursecall/room4/temperature
+  #             payload: !lambda 'return str_sprintf("%.1f °C", x);'
+  #   humidity:
+  #     name: "Room 4 Humidity"
+  #     id: room4_humidity
+  #     unit_of_measurement: "%"
+  #     accuracy_decimals: 1
+  #     on_value:
+  #       then:
+  #         - mqtt.publish:
+  #             topic: nursecall/room4/humidity
+  #             payload: !lambda 'return str_sprintf("%.1f %%", x);'
+  #   update_interval: 10s

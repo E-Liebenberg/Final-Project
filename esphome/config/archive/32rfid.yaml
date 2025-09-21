@@ -1,0 +1,30 @@
+esphome:
+  name: 32rfid
+  friendly_name: 32rfid
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "KoNu6SDJ9suZheq0dOLwp7xRhTZfHFKOPuB8AKm+FKU="
+
+ota:
+  - platform: esphome
+    password: "84fcb4417eb7384c3790bb3528d698d1"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "32Rfid Fallback Hotspot"
+    password: "IrmgpwbDGRCG"
+
+captive_portal:
+    

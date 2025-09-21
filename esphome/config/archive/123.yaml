@@ -1,0 +1,32 @@
+esphome:
+  name: 123
+  friendly_name: 123
+
+esp32:
+  board: lolin32
+  framework:
+    type: esp-idf
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "LmiUNuiri4+0BLY2fobclUe1862J5ORMeHw3EugJOBg="
+
+ota:
+  - platform: esphome
+    password: "740f43d10e16c42566f3d4d43fb097e8"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "123 Fallback Hotspot"
+    password: "5LyEuT0vvT9n"
+
+captive_portal:
+    

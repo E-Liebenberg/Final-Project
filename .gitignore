@@ -1,0 +1,66 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+venv/
+ENV/
+.venv/
+*.env
+
+# Django
+*.log
+*.pot
+*.pyc
+db.sqlite3
+celerybeat-schedule
+/media
+/staticfiles
+/static/
+
+# Local settings
+local_settings.py
+settings_local.py
+
+# ESPHome / Home Assistant
+esphome/cache/
+esphome/.esphome/
+homeassistant/.storage/
+homeassistant/*.db
+
+# Mosquitto
+mosquitto/data/
+mosquitto/log/
+mosquitto/passwd
+
+# Node / Frontend
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# System / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Docker
+*.pid
+*.seed
+*.pid.lock
+docker-compose.override.yml
+
+# Secrets / Keys
+*.key
+*.pem
+*.crt
+*.secret
+*.json

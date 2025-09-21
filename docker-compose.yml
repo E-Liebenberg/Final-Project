@@ -1,0 +1,159 @@
+
+name: nursecall_system
+
+services:
+# ─────────────────────────────────────────────────────────────────────────────
+# Django (management commands, migrations, collectstatic, etc.)
+  django:
+    build:
+      context: ./django
+      dockerfile: Dockerfile
+    container_name: django_app
+    restart: always
+    env_file: [.env]
+    volumes: [./django:/app]
+    working_dir: /app
+    ports:
+      - "8001:8000"          # dev convenience (served by runserver or gunicorn)
+    depends_on: [redis, mqtt]
+    networks: [nursecall_network]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Redis  (broker for Celery + Channels layer)
+  redis:
+    image: redis:6.2-alpine
+    container_name: redis_server
+    restart: always
+    networks: [nursecall_network]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Celery worker for *short‑lived* jobs → queue = default
+  celery-default:
+    build: ./django
+    container_name: celery_default
+    restart: always
+    env_file: [.env]
+    volumes: [./django:/app]
+    working_dir: /app
+    command: celery -A project worker -Q default -n default_worker@%h -l info
+    depends_on: [redis]
+    networks: [nursecall_network]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ONE‑PROCESS WORKERS  – each runs a single listener from the mqtt queue
+
+  celery-mqtt-bedside:
+    build: ./django
+    container_name: celery_mqtt_bedside
+    restart: always
+    env_file: [.env]
+    volumes: [./django:/app]
+    working_dir: /app
+    command: >
+      celery -A project worker
+             -Q mqtt
+             -n bedside_listener@%h
+             -P solo
+             -c 1
+             -l info
+    depends_on: [redis]
+    networks: [nursecall_network]
+
+  celery-mqtt-theatre:
+    build: ./django
+    container_name: celery_mqtt_theatre
+    restart: always
+    env_file: [.env]
+    volumes: [./django:/app]
+    working_dir: /app
+    command: >
+      celery -A project worker
+             -Q mqtt
+             -n theatre_listener@%h
+             -P solo
+             -c 1
+             -l info
+    depends_on: [redis]
+    networks: [nursecall_network]
+
+  celery-mqtt-alerts:
+    build: ./django
+    container_name: celery_mqtt_alerts
+    restart: always
+    env_file: [.env]
+    volumes: [./django:/app]
+    working_dir: /app
+    command: >
+      celery -A project worker
+             -Q mqtt
+             -n alerts_listener@%h
+             -P solo
+             -c 1
+             -l info
+    depends_on: [redis]
+    networks: [nursecall_network]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Eclipse‑Mosquitto broker
+  mqtt:
+    image: eclipse-mosquitto:2.0
+    container_name: mqtt_broker
+    ports:
+      - "1883:1883"
+      - "9001:9001"
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    command: mosquitto -c /mosquitto/config/mosquitto.conf
+    networks: [nursecall_network]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# ESPHome dashboard
+  esphome:
+    image: esphome/esphome
+    container_name: esphome_server
+    ports: ["6052:6052"]
+    volumes:
+      - ./esphome/config:/config
+      - ./esphome/cache:/root/.esphome
+    networks: [nursecall_network]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Home Assistant (optional)
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: home_assistant
+    restart: always
+    ports: ["8123:8123"]
+    volumes: [./homeassistant/config:/config]
+    depends_on: [mqtt]
+    networks: [nursecall_network]
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Daphne ASGI server  (port 8000) – serves HTTP + WebSockets
+  daphne:
+    build:
+      context: ./django
+      dockerfile: Dockerfile
+    container_name: daphne_server
+    restart: always
+    env_file: [.env]
+    volumes: [./django:/app]
+    working_dir: /app
+    depends_on: [django, redis]
+    ports: ["8000:8000"]
+    command: daphne -b 0.0.0.0 -p 8000 project.asgi:application
+    networks: [nursecall_network]
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+# ─────────────────────────────────────────────────────────────────────────────
+networks:
+  nursecall_network:
+    driver: bridge

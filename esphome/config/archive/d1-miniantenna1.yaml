@@ -1,0 +1,30 @@
+esphome:
+  name: d1-miniantenna1
+  friendly_name: D1-MiniAntenna1
+
+esp8266:
+  board: esp01_1m
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "xmbNz46FFaodLctAGJQg2Gsbjt8Bqtand+jEI+WjFVU="
+
+ota:
+  - platform: esphome
+    password: "43aaece3c48c21c198fcd3d4931829da"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "D1-Miniantenna1 Fallback Hotspot"
+    password: "fJOX1SOLJYMv"
+
+captive_portal:
+    

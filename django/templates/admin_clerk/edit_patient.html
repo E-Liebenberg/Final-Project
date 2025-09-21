@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="container py-5">
+        <h2 class="text-center mb-4">Admit New Patient</h2>
+
+        <form method="post" class="shadow p-4 rounded bg-light">
+            {% csrf_token %}
+            
+            <!-- Form Fields -->
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group text-center mt-3">
+                <button type="submit" class="btn btn-primary btn-lg w-50">Admit Patient</button>
+            </div>
+        </form>
+
+        <!-- Back to Dashboard Link -->
+        <div class="text-center mt-4">
+            <p><a href="{% url 'admin_clerk:dashboard' %}" class="btn btn-secondary btn-lg">← Back to Dashboard</a></p>
+        </div>
+    </div>
+{% endblock %}

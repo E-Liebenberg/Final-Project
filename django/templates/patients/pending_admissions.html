@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Pending Admissions</h2>
+<ul>
+  {% for patient in patients %}
+    <li>
+      {{ patient.first_name }} {{ patient.last_name }} (Ward {{ patient.ward }} Bed {{ patient.bed }})
+      — <a href="{% url 'confirm_admission' patient.id %}">Review</a>
+    </li>
+  {% empty %}
+    <li>No pending patients.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

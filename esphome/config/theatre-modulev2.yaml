@@ -1,0 +1,105 @@
+esphome:
+  name: theatre-modulev2
+  friendly_name: Theatre-Modulev2
+
+esp8266:
+  board: d1_mini_pro
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Theatre-Modulev2"
+    password: "LgLEKinXbmxd"
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  port: 1883
+  on_message:
+    - topic: theatre/light/reset
+      then:
+        - light.turn_off: status_light
+        - logger.log: "RGB reset from MQTT (light/reset)"
+    - topic: theatre/code_blue/reset
+      then:
+        - light.turn_off: status_light
+        - logger.log: "RGB reset from MQTT (code_blue/reset)"
+    - topic: theatre/clean/reset
+      then:
+        - light.turn_off: status_light
+        - logger.log: "RGB reset from MQTT (clean/reset)"
+
+captive_portal:
+  
+# --- SPI for RC522 (RFID) ---
+spi:
+  clk_pin: GPIO14  # D5
+  mosi_pin: GPIO13 # D7
+  miso_pin: GPIO12 # D6
+
+rc522_spi:
+  cs_pin: GPIO4  # D2
+  update_interval: 1s
+  on_tag:
+    then:
+      - mqtt.publish:
+          topic: theatre/rfid
+          payload: !lambda 'return x;'
+      - logger.log:
+          format: "RFID Tag Detected: %s"
+          args: ['x.c_str()']
+
+# --- RGB LED (KY-009) using PWM ---
+output:
+  - platform: esp8266_pwm
+    id: red_pwm
+    pin: GPIO2  # D4 - safe
+  - platform: esp8266_pwm
+    id: green_pwm
+    pin: GPIO5  # D1 - safe
+  - platform: esp8266_pwm
+    id: blue_pwm
+    pin: GPIO15  # D8 - only if needed
+
+light:
+  - platform: rgb
+    name: "Theatre Status Light"
+    red: red_pwm
+    green: green_pwm
+    blue: blue_pwm
+    id: status_light
+
+# --- Buttons ---
+binary_sensor:
+  - platform: gpio
+    pin:
+      number:  GPIO16  # D0
+      inverted: true
+    name: "Code Blue Button"
+    on_press:
+      then:
+        - logger.log: "Code Blue Button Pressed"
+        - mqtt.publish:
+            topic: theatre/code_blue
+            payload: "triggered"
+        - light.turn_on:
+            id: status_light
+            red: 0.0
+            green: 0.0
+            blue: 1.0

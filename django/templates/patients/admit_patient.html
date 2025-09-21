@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+    <h1>Patient Admission Form</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <table>
+            {{ form.as_table }}
+        </table>
+
+        <button type="submit">Submit Admission</button>
+    </form>
+
+    <p><a href="{% url 'home' %}">Back to Home</a></p>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}Active Alerts{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">🚨 Active Alerts</h2>
+
+    <!-- Code Blue Alerts (Full width on top) -->
+    <div class="card mb-4">
+        <div class="card-header bg-danger text-white">
+            <h4 class="mb-0">🔴 Code Blue Alerts</h4>
+        </div>
+        <div class="card-body">
+            <ul class="list-group">
+                {% for alert in code_blue_alerts|slice:":5" %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ alert.alert_type|title }}</strong> - 
+                            <small>{{ alert.timestamp|date:"F j, Y, g:i a" }}</small><br>
+                            <small><strong>Ward/Bed:</strong> {{ alert.remote.ward }}/{{ alert.remote.bed }}</small>
+                        </div>
+                        <a href="{% url 'alerts:acknowledge' alert.id %}" class="btn btn-sm btn-outline-success">✅ Acknowledge</a>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-center text-muted">No Code Blue Alerts at the moment.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <!-- Row for Nurse Call and Other Alerts (Side by side) -->
+    <div class="row">
+        <!-- Nurse Call Alerts -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-warning text-dark">
+                    <h4 class="mb-0">🟠 Nurse Call Alerts</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for alert in nurse_call_alerts|slice:":5" %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>{{ alert.alert_type|title }}</strong> - 
+                                    <small>{{ alert.timestamp|date:"F j, Y, g:i a" }}</small><br>
+                                    <small><strong>Ward/Bed:</strong> {{ alert.remote.ward }}/{{ alert.remote.bed }}</small>
+                                </div>
+                                <a href="{% url 'alerts:acknowledge' alert.id %}" class="btn btn-sm btn-outline-success">✅ Acknowledge</a>
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item text-center text-muted">No Nurse Call Alerts at the moment.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Other Alerts -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h4 class="mb-0">🟡 Other Alerts</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        {% for alert in other_alerts|slice:":5" %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <strong>{{ alert.alert_type|title }}</strong> - 
+                                    <small>{{ alert.timestamp|date:"F j, Y, g:i a" }}</small><br>
+                                    <small><strong>Ward/Bed:</strong> {{ alert.remote.ward }}/{{ alert.remote.bed }}</small>
+                                </div>
+                                <a href="{% url 'alerts:acknowledge' alert.id %}" class="btn btn-sm btn-outline-success">✅ Acknowledge</a>
+                            </li>
+                        {% empty %}
+                            <li class="list-group-item text-center text-muted">No other alerts at the moment.</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section for Additional Options like "Show All" -->
+    {% include 'alerts/section.html' with title="🔴 Code Blue Alerts" alerts=code_blue_alerts color="danger" alert_type="code_blue" %}
+    {% include 'alerts/section.html' with title="🟠 Nurse Call Alerts" alerts=nurse_call_alerts color="warning" alert_type="nurse_call" %}
+    {% include 'alerts/section.html' with title="🟡 Other Alerts" alerts=other_alerts color="info" alert_type="other" %}
+</div>
+{% endblock %}

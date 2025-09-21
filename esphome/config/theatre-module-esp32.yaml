@@ -1,0 +1,169 @@
+esphome:
+  name: theatre-module-esp32
+  friendly_name: theatre-module-esp32
+
+esp32:
+  board: nodemcu-32s
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: !secret api_encryption_key
+
+ota:
+  - platform: esphome
+    password: !secret ota_password
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  use_address: 192.168.5.230
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "T2 Fallback Hotspot"
+    password: "nqs9K4bLLP9Q"
+
+captive_portal:
+
+mqtt:
+  broker: !secret mqtt_broker
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  port: 1883
+  on_message:
+    - topic: theatre/light/reset
+      then:
+        - light.turn_off: status_light
+        - logger.log: "MQTT: Light reset received"
+    - topic: theatre/code_blue/reset
+      then:
+        - light.turn_off: status_light
+        - logger.log: "MQTT: Code Blue reset received"
+    - topic: theatre/clean/reset
+      then:
+        - light.turn_off: status_light
+        - logger.log: "MQTT: Clean reset received"
+    - topic: theatre/in_use/reset
+      then:
+        - light.turn_off: status_light
+        - logger.log: "MQTT: In Use reset received"
+
+
+# --- SPI for RC522 ---
+spi:
+  clk_pin: GPIO18   #sck
+  mosi_pin: GPIO23
+  miso_pin: GPIO19
+  id: bus_spi
+
+rc522_spi:
+  id: nfc_reader
+  cs_pin: GPIO21 # sda 
+  update_interval: 1s
+  on_tag:
+    then:
+      - mqtt.publish:
+          topic: theatre/rfid
+          payload: !lambda 'return x;'
+      - logger.log:
+          format: "RFID Tag Detected: %s"
+          args: ['x.c_str()']
+
+# --- RGB LED via PWM (KY-009) ---
+output:
+  - platform: ledc
+    pin: GPIO27
+    id: red_pwm
+  - platform: ledc
+    pin: GPIO22
+    id: green_pwm
+  - platform: ledc
+    pin: GPIO5
+    id: blue_pwm
+
+light:
+  - platform: rgb
+    name: "Theatre Status Light"
+    red: red_pwm
+    green: green_pwm
+    blue: blue_pwm
+    id: status_light
+
+# --- Buttons ---
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO32
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Code Blue Button"
+    on_press:
+      then:
+        - mqtt.publish:
+            topic: theatre/code_blue
+            payload: "triggered"
+        - light.turn_on:
+            id: status_light
+            red: 0.0
+            green: 0.0
+            blue: 1.0
+        - logger.log: "Code Blue Button Pressed"
+
+  - platform: gpio
+    pin:
+      number: GPIO33
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Room Light Button"
+    on_press:
+      then:
+        - mqtt.publish:
+            topic: theatre/light
+            payload: "on"
+        - light.turn_on:
+            id: status_light
+            red: 1.0
+            green: 1.0
+            blue: 1.0
+        - logger.log: "Room Light Button Pressed"
+
+  - platform: gpio
+    pin:
+      number:  GPIO25
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "Clean Theatre Button"
+    on_press:
+      then:
+        - mqtt.publish:
+            topic: theatre/clean
+            payload: "needed"
+        - light.turn_on:
+            id: status_light
+            red: 0.0
+            green: 1.0
+            blue: 0.0
+        - logger.log: "Clean Theatre Button Pressed"
+
+  - platform: gpio
+    pin:
+      number: GPIO26
+      mode: INPUT_PULLUP
+      inverted: True
+    name: "In Use Button"
+    on_press:
+      then:
+        - mqtt.publish:
+            topic: theatre/in_use
+            payload: "true"
+        - light.turn_on:
+            id: status_light
+            red: 1.0
+            green: 0.0
+            blue: 0.0
+        - logger.log: "In Use Button Pressed"

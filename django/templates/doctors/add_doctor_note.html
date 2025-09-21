@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Add Doctor Note{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2>Add Doctor Note for {{ patient.first_name }} {{ patient.last_name }}</h2>
+
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary">Submit Note</button>
+        
+        <!-- Cancel Button Redirecting to Doctor Dashboard -->
+        <a href="{% url 'doctors:doctors_dashboard' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+esphome:
+  name: firebeetle2
+  friendly_name: FireBeetle2
+
+esp32:
+  board: firebeetle32
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "LCYyHV414dq+bjFivd/3Jl9cSwmALSqRyBT4kmFB5QA="
+
+ota:
+  - platform: esphome
+    password: "c392c694676f30587e5d93dbd33e4cb1"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Firebeetle2 Fallback Hotspot"
+    password: "Jk9NsYevEIPs"
+
+captive_portal:
+    

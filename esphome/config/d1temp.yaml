@@ -1,0 +1,89 @@
+esphome:
+  name: d1temp
+  friendly_name: d1Temp
+
+esp8266:
+  board: d1_mini
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "wlsoLXlOCP4uUMB5oxgTK6N/d4pUWGIDS+sNSxH2z2s="
+
+ota:
+  - platform: esphome
+    password: "9fef55fdfaaf853533b16b06e2958dde"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  use_address: 192.168.5.229
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "D1Temp Fallback Hotspot"
+    password: "vdm5wkDT4BAT"
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: 1883
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+
+captive_portal:
+
+# Temperature + Humidity Sensor (DHT22)
+sensor:
+  - platform: dht
+    pin: GPIO2
+    model: DHT22
+    temperature:
+      name: "Room Temperature"
+      id: room_temp
+      unit_of_measurement: "°C"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: nursecall/temperature
+              payload: !lambda 'return str_sprintf("%.1f °C", x);'
+    humidity:
+      name: "Room Humidity"
+      id: room_humidity
+      unit_of_measurement: "%"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: nursecall/humidity
+              payload: !lambda 'return str_sprintf("%.1f %%", x);'
+    update_interval: 10s
+
+  - platform: dht
+    pin: GPIO15
+    model: DHT22
+    temperature:
+      name: "Room Temperature"
+      id: room_temp1
+      unit_of_measurement: "°C"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: nursecall/temperature
+              payload: !lambda 'return str_sprintf("%.1f °C", x);'
+    humidity:
+      name: "Room Humidity"
+      id: room_humidity1
+      unit_of_measurement: "%"
+      accuracy_decimals: 1
+      on_value:
+        then:
+          - mqtt.publish:
+              topic: nursecall/humidity
+              payload: !lambda 'return str_sprintf("%.1f %%", x);'
+    update_interval: 10s
+    

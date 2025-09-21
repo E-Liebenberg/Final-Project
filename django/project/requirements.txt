@@ -1,0 +1,27 @@
+# Web Framework
+django>=5.0,<6.0
+
+# Task Queue
+celery>=5.3,<6.0
+
+# MQTT
+paho-mqtt>=1.6,<2.0
+
+# Redis client (compatible with channels-redis 4.x)
+redis>=4.6,<6.0
+
+# Timezones
+pytz>=2024.1
+
+# Environment Variables
+python-dotenv>=1.0
+python-decouple>=3.8
+
+# Real-time / WebSockets
+channels>=4.0,<5.0
+channels-redis>=4.1,<5.0     # 4.3.x recommended
+daphne>=4.0.0
+
+# File watching (development utilities)
+watchdog>=4.0
+watchfiles>=0.21

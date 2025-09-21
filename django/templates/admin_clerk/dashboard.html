@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4">🩺 Admin Clerk Dashboard</h2>
+
+    <form method="get" class="mb-3 d-flex gap-2">
+        <input type="text" name="q" class="form-control w-25" placeholder="Search by name, ward, or bed..." value="{{ query }}">
+        <button type="submit" class="btn btn-primary">Search</button>
+        <a href="{% url 'admin_clerk:admit_new_patient' %}" class="btn btn-success ms-auto">➕ Admit New Patient</a>
+    </form>
+
+    <h4 class="mt-5">🟡 Pending Patients</h4>
+    <table class="table table-bordered table-hover">
+        <thead class="table-warning">
+            <tr>
+                <th>Patient #</th>
+                <th>Name</th>
+                <th>Ward</th>
+                <th>Bed</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in pending_patients %}
+                <tr>
+                    <td>{{ patient.patient_number }}</td>
+                    <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+                    <td>{{ patient.ward }}</td>
+                    <td>{{ patient.bed }}</td>
+                    <td>
+                        <a href="{% url 'admin_clerk:edit_patient' patient.id %}" class="btn btn-sm btn-outline-secondary">
+                            ✏️ Edit & Admit
+                        </a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No pending patients</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h4 class="mt-5">✅ Admitted Patients</h4>
+    <table class="table table-bordered table-hover">
+        <thead class="table-success">
+            <tr>
+                <th>Patient #</th>
+                <th>Name</th>
+                <th>Ward</th>
+                <th>Bed</th>
+                <th>RFID</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for patient in admitted_patients %}
+                <tr>
+                    <td>{{ patient.patient_number }}</td>
+                    <td>{{ patient.first_name }} {{ patient.last_name }}</td>
+                    <td>{{ patient.ward }}</td>
+                    <td>{{ patient.bed }}</td>
+                    <td>{{ patient.rfid_tag|default:"N/A" }}</td>
+                    <td>
+                        <a href="{% url 'admin_clerk:edit_patient' patient.id %}" class="btn btn-sm btn-outline-primary">
+                            ✏️ Edit
+                        </a>
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" class="text-center">No admitted patients</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
