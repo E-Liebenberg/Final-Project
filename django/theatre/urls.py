@@ -8,4 +8,5 @@ urlpatterns = [
     path("toggle_led/", toggle_led, name="toggle_led"),
     path("history/", theatre_history, name="theatre_history"),
     path("download_csv/", download_csv, name="download_csv"),
+
 ]

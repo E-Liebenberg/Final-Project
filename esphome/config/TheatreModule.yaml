@@ -1,5 +1,5 @@
 substitutions:
-  theatre_id: theatre1  # Change this per theatre (e.g. theatre2, theatre_complex_a)
+  theatre_id: theatre  # Change this per theatre (e.g. theatre2, theatre_complex_a)
 
 esphome:
   name: ${theatre_id}

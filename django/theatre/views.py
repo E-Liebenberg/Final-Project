@@ -13,10 +13,19 @@ from django.http import HttpResponse
 load_dotenv()
 
 # Dashboard page
+# def dashboard_view(request):
+#     theatres = Theatre.objects.values_list('theatre_id', flat=True).distinct()
+#     print("Theatres in DB:", list(theatres))  # ✅ Debug output
+#     return render(request, 'theatre/dashboard.html', {'theatres': theatres})
+# theatre/views.py (snippet)
+# theatre/views.py
 def dashboard_view(request):
-    theatres = Theatre.objects.values_list('theatre_id', flat=True).distinct()
-    print("Theatres in DB:", list(theatres))  # ✅ Debug output
-    return render(request, 'theatre/dashboard.html', {'theatres': theatres})
+    theatres = list(Theatre.objects.values_list('theatre_id', flat=True).distinct())
+    default_theatre = theatres[0] if theatres else "theatre"
+    return render(request, 'theatre/dashboard.html', {
+        'theatres': theatres,
+        'default_theatre': default_theatre,
+    })
 
 # Toggle LED endpoint
 def toggle_led(request):
