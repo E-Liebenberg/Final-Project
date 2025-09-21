@@ -159,7 +159,7 @@ docker compose up --build
 
 ### Create a Password for the MQTT Broker
 ```bash
-docker run --rm -v "${PWD}/mosquitto/config:/mosquitto" eclipse-mosquitto   mosquitto_passwd -b /mosquitto/passwd <MQTT_USER> <MQTT_PASS>
+docker run --rm -v "${PWD}/mosquitto/config:/mosquitto" eclipse-mosquitto mosquitto_passwd -b /mosquitto/passwd <MQTT_USER> <MQTT_PASS>
 ```
 - **username:** `<MQTT_USER>`  
 - **password:** `<MQTT_PASS>`  
