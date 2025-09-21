@@ -21,90 +21,103 @@
       "legacy_bluetooth_proxy_version": 0,
       "bluetooth_proxy_feature_flags": 0,
       "suggested_area": "",
-      "bluetooth_mac_address": ""
+      "bluetooth_mac_address": "",
+      "devices": [],
+      "areas": [],
+      "area": {
+        "area_id": 0,
+        "name": ""
+      }
     },
     "services": [],
     "api_version": {
       "major": 1,
       "minor": 10
     },
-    "binary_sensor": [
+    "switch": [
       {
-        "object_id": "ward10_bed10_remote_button_nurse_call",
-        "key": 2437969520,
-        "name": "ward10_bed10_remote Button Nurse Call",
-        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_nurse_call",
+        "object_id": "ward10_bed10_remote_led_nurse_call",
+        "key": 3366006383,
+        "name": "ward10_bed10_remote LED Nurse Call",
+        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_nurse_call",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "device_class": "",
-        "is_status_binary_sensor": false
+        "device_id": 0,
+        "assumed_state": false,
+        "device_class": ""
       },
       {
-        "object_id": "ward10_bed10_remote_button_light",
-        "key": 3468241794,
-        "name": "ward10_bed10_remote Button Light",
-        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_light",
+        "object_id": "ward10_bed10_remote_led_light",
+        "key": 3466620955,
+        "name": "ward10_bed10_remote LED Light",
+        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_light",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "device_class": "",
-        "is_status_binary_sensor": false
+        "device_id": 0,
+        "assumed_state": false,
+        "device_class": ""
       },
       {
-        "object_id": "ward10_bed10_remote_button_volume_up",
-        "key": 857131308,
-        "name": "ward10_bed10_remote Button Volume Up",
-        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_volume_up",
+        "object_id": "ward10_bed10_remote_led_volume_up",
+        "key": 1461878301,
+        "name": "ward10_bed10_remote LED Volume Up",
+        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_volume_up",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "device_class": "",
-        "is_status_binary_sensor": false
+        "device_id": 0,
+        "assumed_state": false,
+        "device_class": ""
       },
       {
-        "object_id": "ward10_bed10_remote_button_volume_down",
-        "key": 2024499563,
-        "name": "ward10_bed10_remote Button Volume Down",
-        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_volume_down",
+        "object_id": "ward10_bed10_remote_led_volume_down",
+        "key": 1982939350,
+        "name": "ward10_bed10_remote LED Volume Down",
+        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_volume_down",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "device_class": "",
-        "is_status_binary_sensor": false
+        "device_id": 0,
+        "assumed_state": false,
+        "device_class": ""
       },
       {
-        "object_id": "ward10_bed10_remote_button_channel_up",
-        "key": 1971415377,
-        "name": "ward10_bed10_remote Button Channel Up",
-        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_channel_up",
+        "object_id": "ward10_bed10_remote_led_channel_up",
+        "key": 1901907978,
+        "name": "ward10_bed10_remote LED Channel Up",
+        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_channel_up",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "device_class": "",
-        "is_status_binary_sensor": false
+        "device_id": 0,
+        "assumed_state": false,
+        "device_class": ""
       },
       {
-        "object_id": "ward10_bed10_remote_button_channel_down",
-        "key": 3954096466,
-        "name": "ward10_bed10_remote Button Channel Down",
-        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_channel_down",
+        "object_id": "ward10_bed10_remote_led_channel_down",
+        "key": 1886430781,
+        "name": "ward10_bed10_remote LED Channel Down",
+        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_channel_down",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "device_class": "",
-        "is_status_binary_sensor": false
+        "device_id": 0,
+        "assumed_state": false,
+        "device_class": ""
       },
       {
-        "object_id": "ward10_bed10_remote_button_tv_power",
-        "key": 681457822,
-        "name": "ward10_bed10_remote Button TV Power",
-        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_tv_power",
+        "object_id": "ward10_bed10_remote_led_tv_power",
+        "key": 3107644061,
+        "name": "ward10_bed10_remote LED TV Power",
+        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_tv_power",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "device_class": "",
-        "is_status_binary_sensor": false
+        "device_id": 0,
+        "assumed_state": false,
+        "device_class": ""
       }
     ],
     "sensor": [],
@@ -117,86 +130,94 @@
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
+        "device_id": 0,
         "device_class": ""
       }
     ],
-    "switch": [
+    "binary_sensor": [
       {
-        "object_id": "ward10_bed10_remote_led_nurse_call",
-        "key": 3366006383,
-        "name": "ward10_bed10_remote LED Nurse Call",
-        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_nurse_call",
+        "object_id": "ward10_bed10_remote_button_nurse_call",
+        "key": 2437969520,
+        "name": "ward10_bed10_remote Button Nurse Call",
+        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_nurse_call",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "assumed_state": false,
-        "device_class": ""
+        "device_id": 0,
+        "device_class": "",
+        "is_status_binary_sensor": false
       },
       {
-        "object_id": "ward10_bed10_remote_led_light",
-        "key": 3466620955,
-        "name": "ward10_bed10_remote LED Light",
-        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_light",
+        "object_id": "ward10_bed10_remote_button_light",
+        "key": 3468241794,
+        "name": "ward10_bed10_remote Button Light",
+        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_light",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "assumed_state": false,
-        "device_class": ""
+        "device_id": 0,
+        "device_class": "",
+        "is_status_binary_sensor": false
       },
       {
-        "object_id": "ward10_bed10_remote_led_volume_up",
-        "key": 1461878301,
-        "name": "ward10_bed10_remote LED Volume Up",
-        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_volume_up",
+        "object_id": "ward10_bed10_remote_button_volume_up",
+        "key": 857131308,
+        "name": "ward10_bed10_remote Button Volume Up",
+        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_volume_up",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "assumed_state": false,
-        "device_class": ""
+        "device_id": 0,
+        "device_class": "",
+        "is_status_binary_sensor": false
       },
       {
-        "object_id": "ward10_bed10_remote_led_volume_down",
-        "key": 1982939350,
-        "name": "ward10_bed10_remote LED Volume Down",
-        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_volume_down",
+        "object_id": "ward10_bed10_remote_button_volume_down",
+        "key": 2024499563,
+        "name": "ward10_bed10_remote Button Volume Down",
+        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_volume_down",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "assumed_state": false,
-        "device_class": ""
+        "device_id": 0,
+        "device_class": "",
+        "is_status_binary_sensor": false
       },
       {
-        "object_id": "ward10_bed10_remote_led_channel_up",
-        "key": 1901907978,
-        "name": "ward10_bed10_remote LED Channel Up",
-        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_channel_up",
+        "object_id": "ward10_bed10_remote_button_channel_up",
+        "key": 1971415377,
+        "name": "ward10_bed10_remote Button Channel Up",
+        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_channel_up",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "assumed_state": false,
-        "device_class": ""
+        "device_id": 0,
+        "device_class": "",
+        "is_status_binary_sensor": false
       },
       {
-        "object_id": "ward10_bed10_remote_led_channel_down",
-        "key": 1886430781,
-        "name": "ward10_bed10_remote LED Channel Down",
-        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_channel_down",
+        "object_id": "ward10_bed10_remote_button_channel_down",
+        "key": 3954096466,
+        "name": "ward10_bed10_remote Button Channel Down",
+        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_channel_down",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "assumed_state": false,
-        "device_class": ""
+        "device_id": 0,
+        "device_class": "",
+        "is_status_binary_sensor": false
       },
       {
-        "object_id": "ward10_bed10_remote_led_tv_power",
-        "key": 3107644061,
-        "name": "ward10_bed10_remote LED TV Power",
-        "unique_id": "ward10_bed10_remoteswitchward10_bed10_remote_led_tv_power",
+        "object_id": "ward10_bed10_remote_button_tv_power",
+        "key": 681457822,
+        "name": "ward10_bed10_remote Button TV Power",
+        "unique_id": "ward10_bed10_remotebinary_sensorward10_bed10_remote_button_tv_power",
         "disabled_by_default": false,
         "icon": "",
         "entity_category": 0,
-        "assumed_state": false,
-        "device_class": ""
+        "device_id": 0,
+        "device_class": "",
+        "is_status_binary_sensor": false
       }
     ]
   }

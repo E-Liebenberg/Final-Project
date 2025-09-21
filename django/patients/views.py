@@ -50,27 +50,54 @@ def confirm_admission(request, patient_id):
     })
 
 
+# # @user_passes_test(is_admin_clerk_or_superuser)
+# def patient_dashboard(request):
+#     try:
+#         patient = Patient.objects.get(user=request.user)
+#     except Patient.DoesNotExist:
+#         messages.error(request, "You are not registered as a patient.")
+#         return redirect("home")  # You can redirect elsewhere
+
+#     # Ensure correct type and format
+#     ward = str(patient.ward).strip()
+#     bed = str(patient.bed).strip()
+
+#     # Debug print (remove in production)
+#     print("Patient ward:", repr(ward))
+#     print("Patient bed:", repr(bed))
+
+#     # Find matching remote
+#     remote = Remote.objects.filter(ward=ward, bed=bed).first()
+#     print("Matching remote:", remote)
+
+#     return render(request, 'patients/dashboard.html', {
+#         'patient': patient,
+#         'remote': remote
+#     })
+
 @login_required
 def patient_dashboard(request):
-    try:
-        patient = Patient.objects.get(user=request.user)
-    except Patient.DoesNotExist:
-        messages.error(request, "You are not registered as a patient.")
-        return redirect("home")  # You can redirect elsewhere
+    patient = None
 
-    # Ensure correct type and format
-    ward = str(patient.ward).strip()
-    bed = str(patient.bed).strip()
+    # Allow admins/staff to view any patient (default to first)
+    if request.user.is_superuser or request.user.is_staff:
+        # Optional override via ?patient_id=123
+        pid = request.GET.get("patient_id")
+        if pid:
+            patient = get_object_or_404(Patient, pk=pid)
+        else:
+            patient = Patient.objects.order_by("id").first()
+            if not patient:
+                messages.error(request, "No patients exist yet. Please create one first.")
+                return redirect("patients:admit_patient")
+    else:
+        # Normal patients must be linked to their User
+        patient = get_object_or_404(Patient, user=request.user)
 
-    # Debug print (remove in production)
-    print("Patient ward:", repr(ward))
-    print("Patient bed:", repr(bed))
+    # Match a Remote for this patient's ward/bed (works for FK or CharField)
+    remote = Remote.objects.filter(ward=patient.ward, bed=patient.bed).first()
 
-    # Find matching remote
-    remote = Remote.objects.filter(ward=ward, bed=bed).first()
-    print("Matching remote:", remote)
-
-    return render(request, 'patients/dashboard.html', {
-        'patient': patient,
-        'remote': remote
+    return render(request, "patients/dashboard.html", {
+        "patient": patient,
+        "remote": remote,
     })
