@@ -96,11 +96,8 @@ git clone https://github.com/ELUOL/Submission-Repo.git
 cd Submission-Repo
 
 # Create & activate a virtual environment
-python -m venv .venv
-# macOS/Linux:
-source .venv/bin/activate
-# Windows (Powershell):
-.venv\Scripts\Activate.ps1
+python -m venv venv
+venv\Scripts\activate
 ```
 
 ## Install Dependencies
