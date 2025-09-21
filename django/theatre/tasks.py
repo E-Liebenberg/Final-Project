@@ -6,7 +6,6 @@ from channels.layers import get_channel_layer
 from dotenv import load_dotenv
 from celery import shared_task
 from .models import TheatreLog
-from .models import TheatreLog, Theatre
 
 load_dotenv()
 
@@ -56,63 +55,30 @@ def main():
                 client.subscribe(topic)
                 print(f"[MQTT] Subscribed → {topic}")
 
-    # def on_message(client, userdata, msg):
-    #     topic   = msg.topic
-    #     payload = msg.payload.decode()
-    #     print(f"[MQTT] {topic} → {payload}")
+    def on_message(client, userdata, msg):
+        topic   = msg.topic
+        payload = msg.payload.decode()
+        print(f"[MQTT] {topic} → {payload}")
 
-    #     # DB log
-    #     try:
-    #         theatre_id = topic.split("/")[0]
-    #         TheatreLog.objects.create(
-    #             theatre_id=theatre_id,
-    #             topic=topic,
-    #             value=payload,
-    #         )
-    #     except Exception as e:
-    #         print(f"[DB] Log failed: {e}")
+        # DB log
+        try:
+            theatre_id = topic.split("/")[0]
+            TheatreLog.objects.create(
+                theatre_id=theatre_id,
+                topic=topic,
+                value=payload,
+            )
+        except Exception as e:
+            print(f"[DB] Log failed: {e}")
 
-    #     # WebSocket broadcast
-    #     safe_group_send(
-    #         "theatre_updates",
-    #         {
-    #             "type": "send.theatre.update",
-    #             "data": {"topic": topic, "value": payload},
-    #         },
-    #     )
-
-def on_message(client, userdata, msg):
-    topic   = msg.topic
-    payload = msg.payload.decode()
-    print(f"[MQTT] {topic} → {payload}")
-
-    # Extract theatre_id from "theatre1/temperature" etc.
-    theatre_id = topic.split("/")[0]
-
-    # Ensure Theatre exists
-    try:
-        Theatre.objects.get_or_create(theatre_id=theatre_id)
-    except Exception as e:
-        print(f"[DB] Theatre ensure failed: {e}")
-
-    # Log
-    try:
-        TheatreLog.objects.create(
-            theatre_id=theatre_id,
-            topic=topic,
-            value=payload,
+        # WebSocket broadcast
+        safe_group_send(
+            "theatre_updates",
+            {
+                "type": "send.theatre.update",
+                "data": {"topic": topic, "value": payload},
+            },
         )
-    except Exception as e:
-        print(f"[DB] Log failed: {e}")
-
-    # WebSocket broadcast (unchanged)
-    safe_group_send(
-        "theatre_updates",
-        {
-            "type": "send.theatre.update",
-            "data": {"topic": topic, "value": payload},
-        },
-    )
 
     client = mqtt.Client()
     if MQTT_USERNAME and MQTT_PASSWORD:
