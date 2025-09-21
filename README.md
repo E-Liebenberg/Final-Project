@@ -103,8 +103,9 @@ venv\Scripts\activate
 ## Install Dependencies
 ```bash
 # Install from the requirements located inside django/project/
+cd .\django\project\ 
 pip install --upgrade pip
-pip install -r django/project/requirements.txt
+pip install -r requirements.txt
 ```
 
 ## Environment Variables
