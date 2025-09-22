@@ -6,7 +6,7 @@
     {
       "state": {"entity_id":"conversation.home_assistant","state":"unknown","attributes":{"friendly_name":"Home Assistant","supported_features":1},"last_changed":"2025-09-21T13:47:04.739744+00:00","last_reported":"2025-09-21T13:47:04.739744+00:00","last_updated":"2025-09-21T13:47:04.739744+00:00","context":{"id":"01K5P8EDN31B9A8MX565CH223E","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"event.backup_automatic_backup","state":"unknown","attributes":{"event_types":["completed","failed","in_progress"],"event_type":null,"friendly_name":"Backup Automatic backup"},"last_changed":"2025-09-21T13:47:04.904715+00:00","last_reported":"2025-09-21T13:47:04.904715+00:00","last_updated":"2025-09-21T13:47:04.904715+00:00","context":{"id":"01K5P8EDT8B5M4YMJ37RQ8EK92","parent_id":null,"user_id":null}},
@@ -14,217 +14,217 @@
         "last_event_type": null,
         "last_event_attributes": null
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"person.home_admin","state":"unknown","attributes":{"editable":true,"id":"home_admin","device_trackers":[],"user_id":"00f3a6540a604797b8fc29862c22e961","friendly_name":"Home Admin"},"last_changed":"2025-09-21T13:47:05.503426+00:00","last_reported":"2025-09-21T13:47:07.983827+00:00","last_updated":"2025-09-21T13:47:07.983827+00:00","context":{"id":"01K5P8EGTF2CE7NKEC8WDEFJ4D","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"tts.google_translate_en_com","state":"unknown","attributes":{"friendly_name":"Google Translate en com"},"last_changed":"2025-09-21T13:47:07.105393+00:00","last_reported":"2025-09-21T13:47:07.105393+00:00","last_updated":"2025-09-21T13:47:07.105393+00:00","context":{"id":"01K5P8EFZ1Q54NGRP0747HMD5X","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.d1_test_nurse_call","state":"unavailable","attributes":{"friendly_name":"hv-esp Nurse Call"},"last_changed":"2025-09-21T13:47:07.980930+00:00","last_reported":"2025-09-21T13:47:09.505215+00:00","last_updated":"2025-09-21T13:47:08.605203+00:00","context":{"id":"01K5P8EHDX7PQDQ2NY8P4CC4PW","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.d1_test_program","state":"unavailable","attributes":{"friendly_name":"hv-esp Program +"},"last_changed":"2025-09-21T13:47:07.980963+00:00","last_reported":"2025-09-21T13:47:09.506755+00:00","last_updated":"2025-09-21T13:47:08.605237+00:00","context":{"id":"01K5P8EHDXC4G3MR2M2YM4J43G","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.d1_test_program_2","state":"unavailable","attributes":{"friendly_name":"hv-esp Program -"},"last_changed":"2025-09-21T13:47:07.980976+00:00","last_reported":"2025-09-21T13:47:09.508821+00:00","last_updated":"2025-09-21T13:47:08.605258+00:00","context":{"id":"01K5P8EHDXX6CKYFDGADGB25N7","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.d1_test_volume","state":"unavailable","attributes":{"friendly_name":"hv-esp Volume +"},"last_changed":"2025-09-21T13:47:07.980987+00:00","last_reported":"2025-09-21T13:47:09.509387+00:00","last_updated":"2025-09-21T13:47:08.605275+00:00","context":{"id":"01K5P8EHDX242BKFNNMT5JDS1Z","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.d1_test_volume_2","state":"unavailable","attributes":{"friendly_name":"hv-esp Volume -"},"last_changed":"2025-09-21T13:47:07.981000+00:00","last_reported":"2025-09-21T13:47:09.509807+00:00","last_updated":"2025-09-21T13:47:08.605291+00:00","context":{"id":"01K5P8EHDXX848MXY3REEE3N09","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.d1_test_tv_on","state":"unavailable","attributes":{"friendly_name":"hv-esp TV ON"},"last_changed":"2025-09-21T13:47:07.981010+00:00","last_reported":"2025-09-21T13:47:09.512448+00:00","last_updated":"2025-09-21T13:47:08.605307+00:00","context":{"id":"01K5P8EHDXP0APPMC6YGVA08BV","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.d1_test_light_on","state":"unavailable","attributes":{"friendly_name":"hv-esp Light ON"},"last_changed":"2025-09-21T13:47:07.981021+00:00","last_reported":"2025-09-21T13:47:09.512813+00:00","last_updated":"2025-09-21T13:47:08.605323+00:00","context":{"id":"01K5P8EHDXD8V5487N621H5T9J","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.d1_mqqt2_nurse_call_button","state":"unavailable","attributes":{"friendly_name":"d1-mqqt2 Nurse Call Button"},"last_changed":"2025-09-21T13:47:07.981031+00:00","last_reported":"2025-09-21T13:47:09.513832+00:00","last_updated":"2025-09-21T13:47:08.603216+00:00","context":{"id":"01K5P8EHDVK1CW2BXVK70WBM54","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.hv_esp_nurse_call_active","state":"unavailable","attributes":{"device_class":"light","friendly_name":"hv-esp Nurse Call Active"},"last_changed":"2025-09-21T13:47:07.981043+00:00","last_reported":"2025-09-21T13:47:09.514534+00:00","last_updated":"2025-09-21T13:47:08.605473+00:00","context":{"id":"01K5P8EHDXMM4KDJ75G8Z0M5W2","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.hv_esp_nurse_button","state":"unavailable","attributes":{"friendly_name":"hv-esp Nurse Button"},"last_changed":"2025-09-21T13:47:07.981061+00:00","last_reported":"2025-09-21T13:47:09.516913+00:00","last_updated":"2025-09-21T13:47:08.606290+00:00","context":{"id":"01K5P8EHDYJK2WJE25TA2FNWPS","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.d1_minipro_code_blue_button","state":"unavailable","attributes":{"friendly_name":"D1-MiniPro Code Blue Button"},"last_changed":"2025-09-21T13:47:07.981090+00:00","last_reported":"2025-09-21T13:47:09.518560+00:00","last_updated":"2025-09-21T13:47:08.607666+00:00","context":{"id":"01K5P8EHDZ4DKSH9DAFF5N3ZR6","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.lolinesp32_pir_motion_sensor","state":"unavailable","attributes":{"friendly_name":"lolinesp32 PIR Motion Sensor"},"last_changed":"2025-09-21T13:47:07.981170+00:00","last_reported":"2025-09-21T13:47:09.520176+00:00","last_updated":"2025-09-21T13:47:08.726259+00:00","context":{"id":"01K5P8EHHP3DGBDEY0M5HZ3RZQ","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.bedsidev2_room_light_button","state":"unavailable","attributes":{"friendly_name":"bedsidev3_unit Room Light Button"},"last_changed":"2025-09-21T13:47:07.981348+00:00","last_reported":"2025-09-21T13:47:09.521117+00:00","last_updated":"2025-09-21T13:47:08.975258+00:00","context":{"id":"01K5P8EHSFARDH3QMKP4SP3PVP","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"binary_sensor.bedsidev3_unit_bedsidev3_room_light_button","state":"off","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Room Light Button"},"last_changed":"2025-09-21T18:43:56.354010+00:00","last_reported":"2025-09-21T18:43:56.354010+00:00","last_updated":"2025-09-21T18:43:56.354010+00:00","context":{"id":"01K5PSDZT2VK4G5NGWG8NV41HZ","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"binary_sensor.bedsidev3_unit_bedsidev3_room_light_button","state":"unavailable","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Room Light Button"},"last_changed":"2025-09-22T11:01:14.387092+00:00","last_reported":"2025-09-22T11:01:14.387092+00:00","last_updated":"2025-09-22T11:01:14.387092+00:00","context":{"id":"01K5RHBFGKAQ6259JHFZ95CMJA","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"binary_sensor.bedsidev3_unit_bedsidev3_nurse_call_button","state":"off","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Nurse Call Button"},"last_changed":"2025-09-21T18:43:56.354031+00:00","last_reported":"2025-09-21T18:43:56.354031+00:00","last_updated":"2025-09-21T18:43:56.354031+00:00","context":{"id":"01K5PSDZT2APDKE2MVVNECD87X","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"binary_sensor.bedsidev3_unit_bedsidev3_nurse_call_button","state":"unavailable","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Nurse Call Button"},"last_changed":"2025-09-22T11:01:14.387268+00:00","last_reported":"2025-09-22T11:01:14.387268+00:00","last_updated":"2025-09-22T11:01:14.387268+00:00","context":{"id":"01K5RHBFGKZT9D7SHAT4Z4XSAV","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"binary_sensor.bedsidev3_unit_bedsidev3_code_blue_button","state":"off","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Code Blue Button"},"last_changed":"2025-09-21T18:43:56.353812+00:00","last_reported":"2025-09-21T18:43:56.353812+00:00","last_updated":"2025-09-21T18:43:56.353812+00:00","context":{"id":"01K5PSDZT1DZKAARNE0CWTPQKG","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"binary_sensor.bedsidev3_unit_bedsidev3_code_blue_button","state":"unavailable","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Code Blue Button"},"last_changed":"2025-09-22T11:01:14.386737+00:00","last_reported":"2025-09-22T11:01:14.386737+00:00","last_updated":"2025-09-22T11:01:14.386737+00:00","context":{"id":"01K5RHBFGJ8MZ8VCAZN31YPE5Z","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"binary_sensor.bedsidev3_unit_bedsidev3_pir_motion_sensor","state":"on","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 PIR Motion Sensor"},"last_changed":"2025-09-21T18:47:02.445143+00:00","last_reported":"2025-09-21T18:47:02.445143+00:00","last_updated":"2025-09-21T18:47:02.445143+00:00","context":{"id":"01K5PSKNHDXX2B3ZH8HRXDPK0Y","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"binary_sensor.bedsidev3_unit_bedsidev3_pir_motion_sensor","state":"unavailable","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 PIR Motion Sensor"},"last_changed":"2025-09-22T11:01:14.387013+00:00","last_reported":"2025-09-22T11:01:14.387013+00:00","last_updated":"2025-09-22T11:01:14.387013+00:00","context":{"id":"01K5RHBFGKSE567PB0CN245DNP","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.theatre_module_clean_theatre_button","state":"unavailable","attributes":{"friendly_name":"Theatre Module Clean Theatre Button"},"last_changed":"2025-09-21T13:47:07.981891+00:00","last_reported":"2025-09-21T13:47:09.523401+00:00","last_updated":"2025-09-21T13:47:08.893685+00:00","context":{"id":"01K5P8EHPXG7EKK4FW7T2F8J5S","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.theatre_module_esp32_in_use_button","state":"unavailable","attributes":{"friendly_name":"lolinesp32 In Use Button"},"last_changed":"2025-09-21T13:47:07.981926+00:00","last_reported":"2025-09-21T13:47:09.524699+00:00","last_updated":"2025-09-21T13:47:08.726297+00:00","context":{"id":"01K5P8EHHPTRBBFRKZZPJ520TJ","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.fireb2_push_button","state":"unavailable","attributes":{"friendly_name":"fireB2 Push Button"},"last_changed":"2025-09-21T13:47:07.981960+00:00","last_reported":"2025-09-21T13:47:09.526004+00:00","last_updated":"2025-09-21T13:47:08.979076+00:00","context":{"id":"01K5P8EHSKBVFM8XEFXKAMVPHT","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.nodemcu_toggle_button","state":"unavailable","attributes":{"friendly_name":"NodeMCU Toggle Button"},"last_changed":"2025-09-21T13:47:07.982000+00:00","last_reported":"2025-09-21T13:47:09.528322+00:00","last_updated":"2025-09-21T13:47:08.660525+00:00","context":{"id":"01K5P8EHFM3XTENW3SKB8W2A0E","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.fireb2v2_theatre_in_use_button","state":"unavailable","attributes":{"friendly_name":"fireB2 Theatre In Use Button"},"last_changed":"2025-09-21T13:47:07.982051+00:00","last_reported":"2025-09-21T13:47:09.529804+00:00","last_updated":"2025-09-21T13:47:08.979108+00:00","context":{"id":"01K5P8EHSKPQ10Z7QG0MEFRXXY","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.fire4_cleaning_button","state":"unavailable","attributes":{"friendly_name":"fireB2 Cleaning Button"},"last_changed":"2025-09-21T13:47:07.982101+00:00","last_reported":"2025-09-21T13:47:09.531820+00:00","last_updated":"2025-09-21T13:47:08.979128+00:00","context":{"id":"01K5P8EHSKF0TS7BFGHSAPT5PH","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.fire4_light_button","state":"unavailable","attributes":{"friendly_name":"fireB2 Light Button"},"last_changed":"2025-09-21T13:47:07.982117+00:00","last_reported":"2025-09-21T13:47:09.532685+00:00","last_updated":"2025-09-21T13:47:08.979146+00:00","context":{"id":"01K5P8EHSKK1V391MCN1FN6GM7","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.fire5_green_button_cleaning","state":"unavailable","attributes":{"friendly_name":"theatre Green Button - Cleaning"},"last_changed":"2025-09-21T13:47:07.982149+00:00","last_reported":"2025-09-21T17:39:31.919886+00:00","last_updated":"2025-09-21T17:39:31.919886+00:00","context":{"id":"01K5PNR1YF0JNQET4T6QCG2AHC","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.fire5_red_button_in_use","state":"unavailable","attributes":{"friendly_name":"theatre Red Button - In Use"},"last_changed":"2025-09-21T13:47:07.982164+00:00","last_reported":"2025-09-21T17:39:31.920622+00:00","last_updated":"2025-09-21T17:39:31.920622+00:00","context":{"id":"01K5PNR1YGDSWA321CMKMMJV1B","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.fire5_blue_button_code_blue","state":"unavailable","attributes":{"friendly_name":"theatre Blue Button - Code Blue"},"last_changed":"2025-09-21T13:47:07.982179+00:00","last_reported":"2025-09-21T17:39:31.920798+00:00","last_updated":"2025-09-21T17:39:31.920798+00:00","context":{"id":"01K5PNR1YGV9B20PZHNNETHK6V","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.fb1_button_clean","state":"unavailable","attributes":{"friendly_name":"theatre Button - Clean"},"last_changed":"2025-09-21T13:47:07.982256+00:00","last_reported":"2025-09-21T17:39:31.921797+00:00","last_updated":"2025-09-21T17:39:31.921797+00:00","context":{"id":"01K5PNR1YH2H765KMDR627E6WC","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.fb1_button_code_blue","state":"unavailable","attributes":{"friendly_name":"theatre Button - Code Blue"},"last_changed":"2025-09-21T13:47:07.982277+00:00","last_reported":"2025-09-21T17:39:31.922187+00:00","last_updated":"2025-09-21T17:39:31.922187+00:00","context":{"id":"01K5PNR1YJDAZ5MYJKAVJEARGC","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.fb1_button_in_use","state":"unavailable","attributes":{"friendly_name":"theatre Button - In Use"},"last_changed":"2025-09-21T13:47:07.982292+00:00","last_reported":"2025-09-21T17:39:31.922583+00:00","last_updated":"2025-09-21T17:39:31.922583+00:00","context":{"id":"01K5PNR1YJAH5XMA5RSPVW8EHY","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"binary_sensor.fb1_button_lights","state":"unavailable","attributes":{"friendly_name":"theatre Button - Lights"},"last_changed":"2025-09-21T13:47:07.982308+00:00","last_reported":"2025-09-21T17:39:31.922738+00:00","last_updated":"2025-09-21T17:39:31.922738+00:00","context":{"id":"01K5PNR1YJV4QNJAWH0JR6MVZE","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"light.d1_mqqt2_nurse_led","state":"unavailable","attributes":{"supported_color_modes":["onoff"],"friendly_name":"d1-mqqt2 Nurse LED","supported_features":40},"last_changed":"2025-09-21T13:47:07.981074+00:00","last_reported":"2025-09-21T13:47:09.539483+00:00","last_updated":"2025-09-21T13:47:08.717932+00:00","context":{"id":"01K5P8EHHD0JK0GF03VD2QZQYW","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"light.lolinesp32_ky016_rgb_led","state":"unavailable","attributes":{"supported_color_modes":["rgb"],"friendly_name":"lolinesp32 KY016 RGB LED","supported_features":40},"last_changed":"2025-09-21T13:47:07.981159+00:00","last_reported":"2025-09-21T13:47:09.539979+00:00","last_updated":"2025-09-21T13:47:08.726484+00:00","context":{"id":"01K5P8EHHPM3Y923WNYDJWB4R7","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"light.bedsidev3_unit_bedsidev3_ky016_rgb_led","state":"off","attributes":{"supported_color_modes":["rgb"],"color_mode":null,"brightness":null,"hs_color":null,"rgb_color":null,"xy_color":null,"friendly_name":"bedsidev3_unit bedsidev3 KY016 RGB LED","supported_features":40},"last_changed":"2025-09-21T18:43:56.353899+00:00","last_reported":"2025-09-21T18:43:56.353899+00:00","last_updated":"2025-09-21T18:43:56.353899+00:00","context":{"id":"01K5PSDZT1TEVWNQQK8KPXW7KT","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"light.bedsidev3_unit_bedsidev3_ky016_rgb_led","state":"unavailable","attributes":{"supported_color_modes":["rgb"],"friendly_name":"bedsidev3_unit bedsidev3 KY016 RGB LED","supported_features":40},"last_changed":"2025-09-22T11:01:14.386919+00:00","last_reported":"2025-09-22T11:01:14.386919+00:00","last_updated":"2025-09-22T11:01:14.386919+00:00","context":{"id":"01K5RHBFGJQNZ71CF34J22P0H5","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"light.theatre_module_theatre_status_light","state":"unavailable","attributes":{"supported_color_modes":["rgb"],"friendly_name":"Theatre Module Theatre Status Light","supported_features":40},"last_changed":"2025-09-21T13:47:07.981875+00:00","last_reported":"2025-09-21T13:47:09.542910+00:00","last_updated":"2025-09-21T13:47:08.893742+00:00","context":{"id":"01K5P8EHPX1XS93M4Q1CV3819S","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"light.theatre_modulev2_theatre_rgb_light","state":"unavailable","attributes":{"supported_color_modes":["rgb"],"friendly_name":"Theatre Module Theatre RGB Light","supported_features":40},"last_changed":"2025-09-21T13:47:07.981906+00:00","last_reported":"2025-09-21T13:47:09.554109+00:00","last_updated":"2025-09-21T13:47:08.893771+00:00","context":{"id":"01K5P8EHPX9D2257YW9NWBBFJ4","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"light.nodemcu_button_light","state":"unavailable","attributes":{"supported_color_modes":["onoff"],"friendly_name":"NodeMCU Button Light","supported_features":40},"last_changed":"2025-09-21T13:47:07.981980+00:00","last_reported":"2025-09-21T13:47:09.554675+00:00","last_updated":"2025-09-21T13:47:08.773529+00:00","context":{"id":"01K5P8EHK5RBDT2SGWKSAHN64S","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"light.fireb2v2_status_rgb_light","state":"unavailable","attributes":{"supported_color_modes":["rgb"],"friendly_name":"fireB2 Status RGB Light","supported_features":40},"last_changed":"2025-09-21T13:47:07.982021+00:00","last_reported":"2025-09-21T13:47:09.555233+00:00","last_updated":"2025-09-21T13:47:08.979178+00:00","context":{"id":"01K5P8EHSK5NB89NFJGBN2BB6B","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"light.fireb2v2_room_light","state":"unavailable","attributes":{"supported_color_modes":["onoff"],"friendly_name":"fireB2 Room Light","supported_features":40},"last_changed":"2025-09-21T13:47:07.982037+00:00","last_reported":"2025-09-21T13:47:09.556407+00:00","last_updated":"2025-09-21T13:47:08.979203+00:00","context":{"id":"01K5P8EHSKER4YY0N1A3WJVE83","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"light.fire5_ky_009_status_light","state":"unavailable","attributes":{"supported_color_modes":["rgb"],"friendly_name":"theatre KY-009 Status Light","supported_features":40},"last_changed":"2025-09-21T13:47:07.982132+00:00","last_reported":"2025-09-21T17:39:31.923457+00:00","last_updated":"2025-09-21T17:39:31.923457+00:00","context":{"id":"01K5PNR1YKEKJEAHDHSVGYM1PH","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.d1_minipro_room_temperature","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"°C","device_class":"temperature","friendly_name":"D1-MiniPro Room Temperature"},"last_changed":"2025-09-21T13:47:07.981124+00:00","last_reported":"2025-09-21T13:47:09.558860+00:00","last_updated":"2025-09-21T13:47:08.800667+00:00","context":{"id":"01K5P8EHM0B89GDFSGPD88GDXT","parent_id":null,"user_id":null}},
@@ -232,7 +232,7 @@
         "native_value": "nan",
         "native_unit_of_measurement": "°C"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.d1_minipro_room_humidity","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"humidity","friendly_name":"D1-MiniPro Room Humidity"},"last_changed":"2025-09-21T13:47:07.981137+00:00","last_reported":"2025-09-21T13:47:09.559222+00:00","last_updated":"2025-09-21T13:47:08.801661+00:00","context":{"id":"01K5P8EHM11BPVGH1N1TJYSET0","parent_id":null,"user_id":null}},
@@ -240,7 +240,7 @@
         "native_value": "nan",
         "native_unit_of_measurement": "%"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.rfid_last_rfid_tag","state":"unavailable","attributes":{"friendly_name":"rfid Last RFID Tag"},"last_changed":"2025-09-21T13:47:07.981148+00:00","last_reported":"2025-09-21T13:47:09.560401+00:00","last_updated":"2025-09-21T13:47:08.803343+00:00","context":{"id":"01K5P8EHM35AQS2EWND5CR31TJ","parent_id":null,"user_id":null}},
@@ -248,7 +248,7 @@
         "native_value": "No tag",
         "native_unit_of_measurement": null
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.lolinesp32_sound_sensor","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"V","device_class":"voltage","friendly_name":"lolinesp32 Sound Sensor"},"last_changed":"2025-09-21T13:47:07.981182+00:00","last_reported":"2025-09-21T13:47:09.561601+00:00","last_updated":"2025-09-21T13:47:08.806791+00:00","context":{"id":"01K5P8EHM69TCBEBABJF3FVP2G","parent_id":null,"user_id":null}},
@@ -256,7 +256,7 @@
         "native_value": "0.00",
         "native_unit_of_measurement": "V"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.dht22_room_1_temperature","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"°C","device_class":"temperature","friendly_name":"lolinesp32 Room 1 Temperature"},"last_changed":"2025-09-21T13:47:07.981230+00:00","last_reported":"2025-09-21T13:47:09.731235+00:00","last_updated":"2025-09-21T13:47:08.821032+00:00","context":{"id":"01K5P8EHMNBXBQ3888G76NZZRY","parent_id":null,"user_id":null}},
@@ -264,7 +264,7 @@
         "native_value": "20.6",
         "native_unit_of_measurement": "°C"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.dht22_room_1_humidity","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"humidity","friendly_name":"lolinesp32 Room 1 Humidity"},"last_changed":"2025-09-21T13:47:07.981242+00:00","last_reported":"2025-09-21T13:47:09.731622+00:00","last_updated":"2025-09-21T13:47:08.821945+00:00","context":{"id":"01K5P8EHMN0W25B6WZVY1ZXKRS","parent_id":null,"user_id":null}},
@@ -272,7 +272,7 @@
         "native_value": "34.8",
         "native_unit_of_measurement": "%"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.dht22_living_room_temperature","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"°C","device_class":"temperature","friendly_name":"DHT22 Living Room Temperature"},"last_changed":"2025-09-21T13:47:07.981207+00:00","last_reported":"2025-09-21T13:47:09.734535+00:00","last_updated":"2025-09-21T13:47:08.823282+00:00","context":{"id":"01K5P8EHMQGTX2RC86J28HEP7Q","parent_id":null,"user_id":null}},
@@ -280,7 +280,7 @@
         "native_value": "nan",
         "native_unit_of_measurement": "°C"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.dht22_living_room_humidity","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"humidity","friendly_name":"DHT22 Living Room Humidity"},"last_changed":"2025-09-21T13:47:07.981218+00:00","last_reported":"2025-09-21T13:47:09.735204+00:00","last_updated":"2025-09-21T13:47:08.824627+00:00","context":{"id":"01K5P8EHMR8S7D5XDSJQ9CYVZ0","parent_id":null,"user_id":null}},
@@ -288,7 +288,7 @@
         "native_value": "nan",
         "native_unit_of_measurement": "%"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.dht22_room_2_temperature","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"°C","device_class":"temperature","friendly_name":"DHT22 Room 2 Temperature"},"last_changed":"2025-09-21T13:47:07.981256+00:00","last_reported":"2025-09-21T13:47:09.735915+00:00","last_updated":"2025-09-21T13:47:08.832670+00:00","context":{"id":"01K5P8EHN0PRPX0W616CDVJZR4","parent_id":null,"user_id":null}},
@@ -296,7 +296,7 @@
         "native_value": "nan",
         "native_unit_of_measurement": "°C"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.dht22_room_2_humidity","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"humidity","friendly_name":"DHT22 Room 2 Humidity"},"last_changed":"2025-09-21T13:47:07.981267+00:00","last_reported":"2025-09-21T13:47:09.736243+00:00","last_updated":"2025-09-21T13:47:08.834774+00:00","context":{"id":"01K5P8EHN28D57Z7MPW4QFNMWA","parent_id":null,"user_id":null}},
@@ -304,7 +304,7 @@
         "native_value": "nan",
         "native_unit_of_measurement": "%"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.dht22_room_3_temperature","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"°C","device_class":"temperature","friendly_name":"DHT22 Room 3 Temperature"},"last_changed":"2025-09-21T13:47:07.981281+00:00","last_reported":"2025-09-21T13:47:09.736926+00:00","last_updated":"2025-09-21T13:47:08.835607+00:00","context":{"id":"01K5P8EHN3F0HSEFYDHDZ70SSX","parent_id":null,"user_id":null}},
@@ -312,7 +312,7 @@
         "native_value": "nan",
         "native_unit_of_measurement": "°C"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.dht22_room_3_humidity","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"humidity","friendly_name":"DHT22 Room 3 Humidity"},"last_changed":"2025-09-21T13:47:07.981292+00:00","last_reported":"2025-09-21T13:47:09.737262+00:00","last_updated":"2025-09-21T13:47:08.836391+00:00","context":{"id":"01K5P8EHN4S9AMP69253EGNWDR","parent_id":null,"user_id":null}},
@@ -320,7 +320,7 @@
         "native_value": "nan",
         "native_unit_of_measurement": "%"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.dht22_room_4_temperature","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"°C","device_class":"temperature","friendly_name":"DHT22 Room 4 Temperature"},"last_changed":"2025-09-21T13:47:07.981304+00:00","last_reported":"2025-09-21T13:47:09.737584+00:00","last_updated":"2025-09-21T13:47:08.837836+00:00","context":{"id":"01K5P8EHN5Z769RTDDD6RT7WB9","parent_id":null,"user_id":null}},
@@ -328,7 +328,7 @@
         "native_value": "nan",
         "native_unit_of_measurement": "°C"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.dht22_room_4_humidity","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"humidity","friendly_name":"DHT22 Room 4 Humidity"},"last_changed":"2025-09-21T13:47:07.981316+00:00","last_reported":"2025-09-21T13:47:09.737906+00:00","last_updated":"2025-09-21T13:47:08.838597+00:00","context":{"id":"01K5P8EHN6T5PGYV2FZYD0DJR5","parent_id":null,"user_id":null}},
@@ -336,55 +336,55 @@
         "native_value": "nan",
         "native_unit_of_measurement": "%"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"sensor.bedsidev3_unit_bedsidev3_room_temperature","state":"27.8","attributes":{"state_class":"measurement","unit_of_measurement":"°C","device_class":"temperature","friendly_name":"bedsidev3_unit bedsidev3 Room Temperature"},"last_changed":"2025-09-21T18:43:56.353782+00:00","last_reported":"2025-09-21T18:43:56.353782+00:00","last_updated":"2025-09-21T18:43:56.353782+00:00","context":{"id":"01K5PSDZT19M4GW14GSYYYM9V4","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"sensor.bedsidev3_unit_bedsidev3_room_temperature","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"°C","device_class":"temperature","friendly_name":"bedsidev3_unit bedsidev3 Room Temperature"},"last_changed":"2025-09-22T11:01:14.386663+00:00","last_reported":"2025-09-22T11:01:14.386663+00:00","last_updated":"2025-09-22T11:01:14.386663+00:00","context":{"id":"01K5RHBFGJKGFYKJN2NPW8DWCY","parent_id":null,"user_id":null}},
       "extra_data": {
-        "native_value": "27.8",
+        "native_value": "30.8",
         "native_unit_of_measurement": "°C"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"sensor.bedsidev3_unit_bedsidev3_room_humidity","state":"44","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"humidity","friendly_name":"bedsidev3_unit bedsidev3 Room Humidity"},"last_changed":"2025-09-21T18:43:56.353962+00:00","last_reported":"2025-09-21T18:43:56.353962+00:00","last_updated":"2025-09-21T18:43:56.353962+00:00","context":{"id":"01K5PSDZT13HAQTN76QNC3PGKH","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"sensor.bedsidev3_unit_bedsidev3_room_humidity","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"humidity","friendly_name":"bedsidev3_unit bedsidev3 Room Humidity"},"last_changed":"2025-09-22T11:01:14.387054+00:00","last_reported":"2025-09-22T11:01:14.387054+00:00","last_updated":"2025-09-22T11:01:14.387054+00:00","context":{"id":"01K5RHBFGK19YP2TT0P2C38E13","parent_id":null,"user_id":null}},
       "extra_data": {
-        "native_value": "44",
+        "native_value": "34",
         "native_unit_of_measurement": "%"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"sensor.bedsidev3_unit_bedsidev3_sound_sensor","state":"0.00","attributes":{"state_class":"measurement","unit_of_measurement":"V","device_class":"voltage","friendly_name":"bedsidev3_unit bedsidev3 Sound Sensor"},"last_changed":"2025-09-21T18:43:56.353696+00:00","last_reported":"2025-09-21T18:43:56.353696+00:00","last_updated":"2025-09-21T18:43:56.353696+00:00","context":{"id":"01K5PSDZT1GGG6B628MJY1PYJ6","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"sensor.bedsidev3_unit_bedsidev3_sound_sensor","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"V","device_class":"voltage","friendly_name":"bedsidev3_unit bedsidev3 Sound Sensor"},"last_changed":"2025-09-22T11:01:14.386296+00:00","last_reported":"2025-09-22T11:01:14.386296+00:00","last_updated":"2025-09-22T11:01:14.386296+00:00","context":{"id":"01K5RHBFGJCJ5VD8AWK38CHH29","parent_id":null,"user_id":null}},
       "extra_data": {
         "native_value": "0.00",
         "native_unit_of_measurement": "V"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"sensor.bedsidev3_unit_bedsidev3_last_rfid_tag","state":"No tag","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Last RFID Tag"},"last_changed":"2025-09-21T18:43:56.353836+00:00","last_reported":"2025-09-21T18:43:56.353836+00:00","last_updated":"2025-09-21T18:43:56.353836+00:00","context":{"id":"01K5PSDZT1J4KQ1Q0SAXPCSE93","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"sensor.bedsidev3_unit_bedsidev3_last_rfid_tag","state":"unavailable","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Last RFID Tag"},"last_changed":"2025-09-22T11:01:14.386786+00:00","last_reported":"2025-09-22T11:01:14.386786+00:00","last_updated":"2025-09-22T11:01:14.386786+00:00","context":{"id":"01K5RHBFGJ4DF03AF3CVQAC168","parent_id":null,"user_id":null}},
       "extra_data": {
         "native_value": "No tag",
         "native_unit_of_measurement": null
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.theatre_module_theatre_temperature","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"°C","device_class":"temperature","friendly_name":"Theatre Module Theatre Temperature"},"last_changed":"2025-09-21T13:47:07.981833+00:00","last_reported":"2025-09-21T13:47:09.742416+00:00","last_updated":"2025-09-21T13:47:08.893977+00:00","context":{"id":"01K5P8EHPXSWWWJXYWYF3G493R","parent_id":null,"user_id":null}},
       "extra_data": {
-        "native_value": "26.2 °C",
+        "native_value": "30.2 °C",
         "native_unit_of_measurement": "°C"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.theatre_module_theatre_humidity","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"humidity","friendly_name":"Theatre Module Theatre Humidity"},"last_changed":"2025-09-21T13:47:07.981859+00:00","last_reported":"2025-09-21T13:47:09.743032+00:00","last_updated":"2025-09-21T13:47:08.895813+00:00","context":{"id":"01K5P8EHPZ089YFQQ73A04AWDC","parent_id":null,"user_id":null}},
       "extra_data": {
-        "native_value": "42.0 %",
+        "native_value": "33.0 %",
         "native_unit_of_measurement": "%"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.fire3_bed_id_room_temperature","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"°C","device_class":"temperature","friendly_name":"fireB2 ${bed_id} Room Temperature"},"last_changed":"2025-09-21T13:47:07.982067+00:00","last_reported":"2025-09-21T13:47:09.744807+00:00","last_updated":"2025-09-21T13:47:08.979230+00:00","context":{"id":"01K5P8EHSK3XVAS4CBKR178909","parent_id":null,"user_id":null}},
@@ -392,7 +392,7 @@
         "native_value": "nan",
         "native_unit_of_measurement": "°C"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.fire3_bed_id_room_humidity","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"humidity","friendly_name":"fireB2 ${bed_id} Room Humidity"},"last_changed":"2025-09-21T13:47:07.982084+00:00","last_reported":"2025-09-21T13:47:09.745178+00:00","last_updated":"2025-09-21T13:47:08.979252+00:00","context":{"id":"01K5P8EHSKYFB8JATDJ1J6NHA7","parent_id":null,"user_id":null}},
@@ -400,7 +400,7 @@
         "native_value": "nan",
         "native_unit_of_measurement": "%"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.theatre1_theatre1_temperature","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"°C","device_class":"temperature","friendly_name":"theatre theatre1 Temperature"},"last_changed":"2025-09-21T17:39:30.567575+00:00","last_reported":"2025-09-21T17:39:31.923954+00:00","last_updated":"2025-09-21T17:39:31.923954+00:00","context":{"id":"01K5PNR1YK0EVN76P1VSYA0JYN","parent_id":null,"user_id":null}},
@@ -408,7 +408,7 @@
         "native_value": "27.1",
         "native_unit_of_measurement": "°C"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"sensor.theatre1_theatre1_humidity","state":"unavailable","attributes":{"state_class":"measurement","unit_of_measurement":"%","device_class":"humidity","friendly_name":"theatre theatre1 Humidity"},"last_changed":"2025-09-21T17:39:30.567598+00:00","last_reported":"2025-09-21T17:39:31.923981+00:00","last_updated":"2025-09-21T17:39:31.923981+00:00","context":{"id":"01K5PNR1YKRC778V9JVA1NC5XC","parent_id":null,"user_id":null}},
@@ -416,107 +416,107 @@
         "native_value": "43.0",
         "native_unit_of_measurement": "%"
       },
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.d1_minipro_code_blue_led","state":"unavailable","attributes":{"friendly_name":"D1-MiniPro Code Blue LED"},"last_changed":"2025-09-21T13:47:07.981101+00:00","last_reported":"2025-09-21T13:47:09.749308+00:00","last_updated":"2025-09-21T13:47:08.950011+00:00","context":{"id":"01K5P8EHRP3QAF4JY8B6ZBZ6PQ","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.d1_minipro_nurse_call_led","state":"unavailable","attributes":{"friendly_name":"D1-MiniPro Nurse Call LED"},"last_changed":"2025-09-21T13:47:07.981112+00:00","last_reported":"2025-09-21T13:47:09.749616+00:00","last_updated":"2025-09-21T13:47:08.951407+00:00","context":{"id":"01K5P8EHRQCPDH586YCSVSNEQ2","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.lolinesp32_buzzer","state":"unavailable","attributes":{"friendly_name":"lolinesp32 Buzzer"},"last_changed":"2025-09-21T13:47:07.981193+00:00","last_reported":"2025-09-21T13:47:09.749860+00:00","last_updated":"2025-09-21T13:47:08.953953+00:00","context":{"id":"01K5P8EHRSQ1CA325X7QTGH3N8","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.rfid32v2_buzzer_via_mqtt","state":"unavailable","attributes":{"friendly_name":"bedsidev3_unit Buzzer via MQTT"},"last_changed":"2025-09-21T13:47:07.981326+00:00","last_reported":"2025-09-21T13:47:09.750762+00:00","last_updated":"2025-09-21T13:47:08.975514+00:00","context":{"id":"01K5P8EHSF2V9E3M79SHWDMDTM","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.bedsidev2_room_light","state":"unavailable","attributes":{"friendly_name":"bedsidev3_unit Room Light"},"last_changed":"2025-09-21T13:47:07.981337+00:00","last_reported":"2025-09-21T13:47:09.751393+00:00","last_updated":"2025-09-21T13:47:08.975534+00:00","context":{"id":"01K5P8EHSF52ZTKVYNZTP9449X","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"switch.bedsidev3_unit_bedsidev3_buzzer","state":"off","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Buzzer"},"last_changed":"2025-09-21T18:43:56.353920+00:00","last_reported":"2025-09-21T18:43:56.353920+00:00","last_updated":"2025-09-21T18:43:56.353920+00:00","context":{"id":"01K5PSDZT1BNJ00W7XK5PMRSJZ","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"switch.bedsidev3_unit_bedsidev3_buzzer","state":"unavailable","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Buzzer"},"last_changed":"2025-09-22T11:01:14.386972+00:00","last_reported":"2025-09-22T11:01:14.386972+00:00","last_updated":"2025-09-22T11:01:14.386972+00:00","context":{"id":"01K5RHBFGJ958KBBWZ453RBZRZ","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"switch.bedsidev3_unit_bedsidev3_room_light","state":"on","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Room Light"},"last_changed":"2025-09-21T18:43:56.353858+00:00","last_reported":"2025-09-21T18:43:56.353858+00:00","last_updated":"2025-09-21T18:43:56.353858+00:00","context":{"id":"01K5PSDZT1C4EVJ90RXQ68ZR0S","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"switch.bedsidev3_unit_bedsidev3_room_light","state":"unavailable","attributes":{"friendly_name":"bedsidev3_unit bedsidev3 Room Light"},"last_changed":"2025-09-22T11:01:14.386832+00:00","last_reported":"2025-09-22T11:01:14.386832+00:00","last_updated":"2025-09-22T11:01:14.386832+00:00","context":{"id":"01K5RHBFGJ0STAYC7GHQXMGENG","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.fireb2_led_switch","state":"unavailable","attributes":{"friendly_name":"fireB2 LED Switch"},"last_changed":"2025-09-21T13:47:07.981942+00:00","last_reported":"2025-09-21T13:47:09.752197+00:00","last_updated":"2025-09-21T13:47:08.979399+00:00","context":{"id":"01K5P8EHSK7PJPYWAYJ12JH6HJ","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.fb1_green_led_clean","state":"unavailable","attributes":{"friendly_name":"theatre Green LED - Clean"},"last_changed":"2025-09-21T13:47:07.982197+00:00","last_reported":"2025-09-21T17:39:31.924059+00:00","last_updated":"2025-09-21T17:39:31.924059+00:00","context":{"id":"01K5PNR1YMCWK40CR03ZGQ5ENP","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.fb1_blue_led_code_blue","state":"unavailable","attributes":{"friendly_name":"theatre Blue LED - Code Blue"},"last_changed":"2025-09-21T13:47:07.982211+00:00","last_reported":"2025-09-21T17:39:31.924539+00:00","last_updated":"2025-09-21T17:39:31.924539+00:00","context":{"id":"01K5PNR1YMWGJXER62NVDR26KM","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.fb1_red_led_in_use","state":"unavailable","attributes":{"friendly_name":"theatre Red LED - In Use"},"last_changed":"2025-09-21T13:47:07.982226+00:00","last_reported":"2025-09-21T17:39:31.925229+00:00","last_updated":"2025-09-21T17:39:31.925229+00:00","context":{"id":"01K5PNR1YNM7A8JJQQ023603AQ","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.fb1_white_led_lights","state":"unavailable","attributes":{"friendly_name":"theatre White LED - Lights"},"last_changed":"2025-09-21T13:47:07.982241+00:00","last_reported":"2025-09-21T17:39:31.927850+00:00","last_updated":"2025-09-21T17:39:31.927850+00:00","context":{"id":"01K5PNR1YQH3VZM71857T1J26A","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.theatre1_theatre1_led_clean","state":"unavailable","attributes":{"friendly_name":"theatre theatre1 LED - Clean"},"last_changed":"2025-09-21T17:39:30.567448+00:00","last_reported":"2025-09-21T17:39:31.927984+00:00","last_updated":"2025-09-21T17:39:31.927984+00:00","context":{"id":"01K5PNR1YQ61KQR4NSPNVEME0Q","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.theatre1_theatre1_led_code_blue","state":"unavailable","attributes":{"friendly_name":"theatre theatre1 LED - Code Blue"},"last_changed":"2025-09-21T17:39:30.567546+00:00","last_reported":"2025-09-21T17:39:31.928007+00:00","last_updated":"2025-09-21T17:39:31.928007+00:00","context":{"id":"01K5PNR1YRHA10H8PGW9B57MG6","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.theatre1_theatre1_led_in_use","state":"unavailable","attributes":{"friendly_name":"theatre theatre1 LED - In Use"},"last_changed":"2025-09-21T17:39:30.567524+00:00","last_reported":"2025-09-21T17:39:31.928028+00:00","last_updated":"2025-09-21T17:39:31.928028+00:00","context":{"id":"01K5PNR1YR93FJ5H13P59Q2K8M","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
       "state": {"entity_id":"switch.theatre1_theatre1_led_lights","state":"unavailable","attributes":{"friendly_name":"theatre theatre1 LED - Lights"},"last_changed":"2025-09-21T17:39:30.567362+00:00","last_reported":"2025-09-21T17:39:31.928154+00:00","last_updated":"2025-09-21T17:39:31.928154+00:00","context":{"id":"01K5PNR1YRQP8JJ5202VWQ1NME","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"switch.theatre_theatre_led_clean","state":"off","attributes":{"friendly_name":"theatre theatre LED - Clean"},"last_changed":"2025-09-21T18:27:19.090211+00:00","last_reported":"2025-09-21T18:27:19.090211+00:00","last_updated":"2025-09-21T18:27:19.090211+00:00","context":{"id":"01K5PRFHXJTVAZSVB04EC8WNVH","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"switch.theatre_theatre_led_clean","state":"unavailable","attributes":{"friendly_name":"theatre theatre LED - Clean"},"last_changed":"2025-09-22T11:01:15.388900+00:00","last_reported":"2025-09-22T11:01:15.388900+00:00","last_updated":"2025-09-22T11:01:15.388900+00:00","context":{"id":"01K5RHBGFWQB8XB1S5RYAX5QY6","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"switch.theatre_theatre_led_code_blue","state":"off","attributes":{"friendly_name":"theatre theatre LED - Code Blue"},"last_changed":"2025-09-21T18:44:14.276631+00:00","last_reported":"2025-09-21T18:44:14.276631+00:00","last_updated":"2025-09-21T18:44:14.276631+00:00","context":{"id":"01K5PSEHA48010SACR2617VRRB","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"switch.theatre_theatre_led_code_blue","state":"unavailable","attributes":{"friendly_name":"theatre theatre LED - Code Blue"},"last_changed":"2025-09-22T11:01:15.388700+00:00","last_reported":"2025-09-22T11:01:15.388700+00:00","last_updated":"2025-09-22T11:01:15.388700+00:00","context":{"id":"01K5RHBGFWBMDY9H2131VYPV32","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"switch.theatre_theatre_led_in_use","state":"off","attributes":{"friendly_name":"theatre theatre LED - In Use"},"last_changed":"2025-09-21T18:27:18.877368+00:00","last_reported":"2025-09-21T18:27:18.877368+00:00","last_updated":"2025-09-21T18:27:18.877368+00:00","context":{"id":"01K5PRFHPXBGEZYW0KP52RDA8A","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"switch.theatre_theatre_led_in_use","state":"unavailable","attributes":{"friendly_name":"theatre theatre LED - In Use"},"last_changed":"2025-09-22T11:01:15.388932+00:00","last_reported":"2025-09-22T11:01:15.388932+00:00","last_updated":"2025-09-22T11:01:15.388932+00:00","context":{"id":"01K5RHBGFWV62BE1525R98H3BS","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     },
     {
-      "state": {"entity_id":"switch.theatre_theatre_led_lights","state":"on","attributes":{"friendly_name":"theatre theatre LED - Lights"},"last_changed":"2025-09-21T18:44:03.012529+00:00","last_reported":"2025-09-21T18:44:03.012529+00:00","last_updated":"2025-09-21T18:44:03.012529+00:00","context":{"id":"01K5PSE6A4F51W3MMSSC6V0BQH","parent_id":null,"user_id":null}},
+      "state": {"entity_id":"switch.theatre_theatre_led_lights","state":"unavailable","attributes":{"friendly_name":"theatre theatre LED - Lights"},"last_changed":"2025-09-22T11:01:15.388845+00:00","last_reported":"2025-09-22T11:01:15.388845+00:00","last_updated":"2025-09-22T11:01:15.388845+00:00","context":{"id":"01K5RHBGFWY71SMB53CZP0D310","parent_id":null,"user_id":null}},
       "extra_data": null,
-      "last_seen": "2025-09-21T18:47:06.913865+00:00"
+      "last_seen": "2025-09-22T11:58:11.831821+00:00"
     }
   ]
 }
